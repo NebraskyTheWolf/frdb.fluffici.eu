@@ -8,6 +8,7 @@ import axios from 'axios';
 import { showToast } from '@/components/toast.tsx';
 import { GuildSettings } from '@/models/GuildSettings.ts';
 import dynamic from "next/dynamic";
+import 'react-quill/dist/quill.snow.css';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
