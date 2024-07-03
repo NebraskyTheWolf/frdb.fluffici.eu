@@ -140,7 +140,7 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
         if (!selectedMemberBl) return;
 
         try {
-            const response = await axios.post(`/api/servers/${serverId}/add-blacklist?actorId=${session?.user.id}`, {
+            const response = await axios.post(`/api/servers/${serverId}/add-blacklist`, {
                 user: selectedMemberBl.id,
                 reason: reason,
             });
@@ -166,7 +166,7 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
     const handleAddWhitelist = ({ event, props, triggerEvent, data }: any) => {
         const addWhitelist = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/add-whitelist?actorId=${session?.user.id}`, {
+                const response = await axios.post(`/api/servers/${serverId}/add-whitelist`, {
                     user: props.member.id
                 });
 

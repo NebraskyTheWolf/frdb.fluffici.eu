@@ -1,157 +1,122 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
+import Slider from "react-slick";
+import { FaShieldAlt, FaBan, FaGavel, FaUserShield, FaFilter, FaUsers, FaIdCard, FaTicketAlt } from "react-icons/fa";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Features: React.FC = () => {
+  const [expanded, setExpanded] = useState<number | null>(null);
+
+  const toggleExpand = (index: number) => {
+    setExpanded(expanded === index ? null : index);
+  };
+
+  const features = [
+    {
+      icon: <FaShieldAlt />,
+      title: "Anti-Raid",
+      shortDescription: "Protect your server from malicious attacks and spam.",
+      fullDescription: "Protect your server from malicious attacks and spam raids with advanced automated defenses. Our system quickly identifies and neutralizes potential threats, ensuring a safe and secure environment for your community."
+    },
+    {
+      icon: <FaBan />,
+      title: "Blacklist",
+      shortDescription: "Comprehensive database of unwanted users.",
+      fullDescription: "Blacklist is a comprehensive database of unwanted users and known scammers, managed by the FurRaidDB team. In addition to this global list, there is also a local blacklist feature, allowing regular users to manage their own restricted user lists."
+    },
+    {
+      icon: <FaGavel />,
+      title: "Moderation",
+      shortDescription: "Maintain order and enforce rules efficiently.",
+      fullDescription: "Maintain order and enforce rules efficiently with powerful moderation tools. Enable your moderators to quickly address issues, manage user behavior, and ensure compliance with community standards."
+    },
+    {
+      icon: <FaUserShield />,
+      title: "Anti-Scammer",
+      shortDescription: "Protect your community from scammers.",
+      fullDescription: "Protect your community from scammers with our advanced anti-scammer tools. Our system monitors and detects suspicious activities, providing you with real-time alerts and measures to prevent fraud."
+    },
+    {
+      icon: <FaFilter />,
+      title: "Spam Filter",
+      shortDescription: "Keep your server clean and clutter-free.",
+      fullDescription: "Keep your server clean and clutter-free with our advanced spam filter. Automatically detect and remove spam messages, ensuring meaningful conversations are not interrupted."
+    },
+    {
+      icon: <FaUsers />,
+      title: "Invite Tracker",
+      shortDescription: "Monitor and analyze invite activity.",
+      fullDescription: "Monitor and analyze invite activity with our powerful Invite Tracker. Track who is inviting new members to your server and how effective each invite is."
+    },
+    {
+      icon: <FaIdCard />,
+      title: "Member Verification",
+      shortDescription: "Ensure security and trust in your community.",
+      fullDescription: "Ensure security and trust in your community with our member verification system. Users must fill out a form and submit it for review by staff, helping to verify identities and ensure only genuine members join your community."
+    },
+    {
+      icon: <FaTicketAlt />,
+      title: "Support Ticket System",
+      shortDescription: "Facilitate problem-solving and inquiries.",
+      fullDescription: "Facilitate problem-solving and inquiries in your community with our advanced support ticket system. Members can easily create tickets for their issues or questions, which can then be assigned to the appropriate moderators or support staff."
+    }
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2500, // 2.5 seconds
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      }
+    ]
+  };
+
   return (
       <section className="py-8">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Funkce</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Anti-Raid</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Chraňte svůj server před škodlivými útoky a spamovými útoky pomocí pokročilých automatizovaných obran.
-                  Náš systém
-                  rychle identifikuje a neutralizuje potenciální hrozby, čímž zajišťuje bezpečné a zabezpečené prostředí
-                  pro vaši
-                  komunitu. Přizpůsobte nastavení podle svých konkrétních potřeb a užijte si klid s vědomím, že váš
-                  server je chráněn
-                  24/7 před nechtěnými průniky a narušujícími chováními.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Blacklist</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Blacklist je komplexní databáze nežádoucích uživatelů a známých podvodníků, spravovaná týmem
-                  FurRaidDB.
-                  Kromě tohoto globálního seznamu existuje také místní blacklistová funkce, která umožňuje běžným
-                  uživatelům
-                  spravovat vlastní seznam omezených uživatelů. Tento dvojí přístup zajišťuje, že váš server je chráněn
-                  jak před
-                  rozšířenými hrozbami, tak před konkrétními jednotlivci, kteří nejsou v souladu s vašimi komunitními
-                  zásadami.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Moderation</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Udržujte pořádek a efektivně prosazujte pravidla pomocí výkonných nástrojů pro moderování. Umožněte
-                  svým moderátorům
-                  rychle řešit problémy, spravovat chování uživatelů a zajišťovat dodržování komunitních standardů. Naše
-                  komplexní
-                  sada moderovacích funkcí zahrnuje nástroje pro ztlumení, vykopnutí, zákaz a varování uživatelů. Zvýšte
-                  funkčnost
-                  svého serveru pomocí automatizovaných moderovacích možností, což zajišťuje konzistentní a spravedlivé
-                  prosazování
-                  vašich pravidel bez přetěžování vašeho týmu.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2 text-white">Anti-Scammer</h3>
-                <p className="text-lg text-white flex-grow">
-                  Chraňte svou komunitu před podvodníky pomocí našich pokročilých nástrojů proti podvodníkům. Náš systém
-                  monitoruje a
-                  detekuje podezřelé aktivity, poskytuje vám upozornění v reálném čase a opatření k zabránění podvodům.
-                  Buďte informováni
-                  a přijímejte preventivní opatření, abyste zajistili bezpečnost a důvěryhodnost svého serveru, a
-                  chránili své členy
-                  před potenciálními podvody a klamáním.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Spam Filter</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Udržujte svůj server čistý a přehledný pomocí našeho pokročilého filtru spamu. Automaticky detekuje a
-                  odstraňuje
-                  spamové zprávy, čímž zajišťuje, že smysluplné konverzace nejsou přerušovány. Přizpůsobte citlivost
-                  filtru a parametry
-                  tak, aby co nejlépe vyhovovaly potřebám vaší komunity, a užijte si plynulejší a příjemnější
-                  uživatelské prostředí bez
-                  nechtěného spamu.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Invite Tracker</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Monitorujte a analyzujte aktivitu pozvánek pomocí našeho výkonného nástroje Invite Tracker. Sledujte,
-                  kdo pozývá
-                  nové členy na váš server a jak efektivní každá pozvánka je. Získejte přehled o růstu vaší komunity,
-                  odměňujte nejlepší
-                  pozývatele a identifikujte potenciální problémy související s pozvánkami. Invite Tracker vám pomáhá
-                  porozumět a
-                  spravovat příliv nových členů, čímž zajišťuje stabilní a zdravý růst vaší komunity.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Formulář pro ověření členů</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Zajistěte bezpečnost a důvěryhodnost vaší komunity pomocí našeho systému ověřování členů. Uživatelé
-                  musí vyplnit několik
-                  otázek ve formuláři a poté jej odeslat personálu ke kontrole. Tento proces pomáhá ověřit identitu
-                  uživatelů a zajišťuje,
-                  že do vaší komunity se připojují pouze skuteční a důvěryhodní členové. Zlepšete kvalitu vaší komunity
-                  a minimalizujte riziko
-                  nežádoucích účtů pomocí efektivního ověřovacího procesu.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                  className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 cursor-pointer min-h-full flex flex-col">
-                <h3 className="text-xl font-bold mb-2">Systém podpory tiketů</h3>
-                <p className="text-lg text-gray-300 flex-grow">
-                  Usnadněte řešení problémů a dotazů ve vaší komunitě pomocí našeho pokročilého systému podpory tiketů.
-                  Systém umožňuje členům jednoduše vytvářet tikety pro své problémy nebo otázky, které pak mohou být
-                  přiřazeny správným moderátorům nebo členům podpory. Zajistěte rychlé a efektivní řešení problémů a
-                  zlepšete
-                  spokojenost členů vaší komunity díky transparentnímu a organizovanému procesu podpory.
-                </p>
-              </div>
-              <div
-                  className="absolute inset-0 rounded-lg border border-transparent hover:border-green-400 transition duration-300 cursor-pointer"></div>
-            </div>
-
-          </div>
+          <h2 className="text-3xl font-bold mb-8 text-center">Features</h2>
+          <Slider {...settings}>
+            {features.map((feature, index) => (
+                <div key={index} className="px-2">
+                  <div
+                      className={`bg-gray-900 p-6 rounded-lg shadow-md transform transition-all duration-300 cursor-pointer flex flex-col ${expanded === index ? 'shadow-lg max-h-[500px]' : 'hover:shadow-lg max-h-[200px]'}`}
+                      onClick={() => toggleExpand(index)}
+                      style={{cursor: 'pointer', overflow: 'hidden', height: expanded === index ? 'auto' : '200px'}}
+                  >
+                    <h3 className="text-xl font-bold mb-2 flex items-center">
+                      {feature.icon}
+                      <span className="ml-2">{feature.title}</span>
+                    </h3>
+                    <p className="text-lg text-gray-300 flex-grow overflow-hidden">
+                      {expanded === index ? feature.fullDescription : `${feature.shortDescription.slice(0, 60)}...`}
+                    </p>
+                    {expanded !== index && <span className="text-gray-500 mt-2">Click to read more</span>}
+                  </div>
+                </div>
+            ))}
+          </Slider>
         </div>
       </section>
   );

@@ -112,7 +112,7 @@ const LocalWhitelistView: React.FC<ViewMembersProps> = ({ serverId }) => {
     const handleItemClick = ({ event, props, triggerEvent, data }: any) => {
         const removeWhitelist = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/remove-whitelist?actorId=${session?.user.id}`, {
+                const response = await axios.post(`/api/servers/${serverId}/remove-whitelist`, {
                     user: props.member.id
                 });
 

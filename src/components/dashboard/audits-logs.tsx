@@ -28,7 +28,7 @@ const AuditLogsView: React.FC<AuditLogsProps> = ({ serverId, actorId }) => {
 
     const fetchLogs = async (page: number = 1, filter: string = "") => {
         try {
-            const response = await axios.get(`/api/servers/${serverId}/audit-logs?page=${page}&limit=${filter.length !== 0 ? 5000 : 10}&actorId=${actorId}`);
+            const response = await axios.get(`/api/servers/${serverId}/audit-logs?page=${page}&limit=${filter.length !== 0 ? 5000 : 10}`);
             const dataModel: DataModel = response.data;
             setLogs(dataModel.data.filter(value => value.action.includes(filter)));
             setPagination(dataModel.pagination);

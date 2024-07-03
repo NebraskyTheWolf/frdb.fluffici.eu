@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from "axios";
 import {getSession} from "next-auth/react";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
 
 type ErrorResponse = {
     error: string;
@@ -10,11 +12,14 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<ErrorResponse>
 ) {
-    const { id, actorId} = req.query;
+    const { id} = req.query;
+    const session = await getServerSession(req, res, authOptions)
+    if (!session)
+        return res.status(401).json({ error: 'Unauthorized' });
 
     try {
         const response = await axios.post(`https://furraidapi.fluffici.eu/servers/${id}/settings`, {
-            actorId: actorId
+            actorId: session.user.id
         },{
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`

@@ -121,7 +121,7 @@ const LocalBlacklistView: React.FC<ViewMembersProps> = ({ serverId }) => {
     const handleItemClick = ({ event, props, triggerEvent, data }: any) => {
         const removeBlacklist = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/remove-blacklist?actorId=${session?.user.id}`, {
+                const response = await axios.post(`/api/servers/${serverId}/remove-blacklist`, {
                     user: props.member.id
                 });
 

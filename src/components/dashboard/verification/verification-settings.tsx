@@ -57,7 +57,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/settings?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/settings`);
                 setSettings(response.data);
                 setQuestions(response.data.config.features.verification.settings.questions);
                 setEnabled(response.data.config.features.verification.enabled);
@@ -71,7 +71,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
 
         const fetchChannels = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/channels?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/channels`);
                 setChannels(response.data.channels.filter((channel: Channel) => channel.type === "TEXT"));
             } catch (error) {
                 showToast("Unable to fetch channels", "error");
@@ -82,7 +82,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
 
         const fetchRoles = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/roles?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/roles`);
                 setRoles(response.data.roles);
             } catch (error) {
                 showToast("Unable to fetch roles", "error");
@@ -161,7 +161,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
             updatedSettings.config.features.verification.settings.verificationGate = option.value;
 
             try {
-                const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+                const response = await axios.post(`/api/patch-settings`, updatedSettings);
                 setSettings(updatedSettings);
 
                 if (!response.data.status) {
@@ -179,7 +179,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
             updatedSettings.config.features.verification.settings.verificationLoggingChannel = option.value;
 
             try {
-                const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+                const response = await axios.post(`/api/patch-settings`, updatedSettings);
                 setSettings(updatedSettings);
 
                 if (!response.data.status) {
@@ -197,7 +197,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
             updatedSettings.config.features.verification.settings.unverifiedRole = option.value;
 
             try {
-                const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+                const response = await axios.post(`/api/patch-settings`, updatedSettings);
                 setSettings(updatedSettings);
 
                 if (!response.data.status) {
@@ -215,7 +215,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
             updatedSettings.config.features.verification.settings.verifiedRole = option.value;
 
             try {
-                const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+                const response = await axios.post(`/api/patch-settings`, updatedSettings);
                 setSettings(updatedSettings);
 
                 if (!response.data.status) {
@@ -231,7 +231,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
         if (!updatedSettings) return;
 
         try {
-            const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+            const response = await axios.post(`/api/patch-settings`, updatedSettings);
             setSettings(updatedSettings);
 
             if (!response.data.status) {
@@ -246,7 +246,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
         if (!updatedSettings) return;
 
         try {
-            const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+            const response = await axios.post(`/api/patch-settings`, updatedSettings);
             setSettings(updatedSettings);
 
             if (!response.data.status) {
@@ -264,7 +264,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
             setEnabled(state);
 
             try {
-                const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+                const response = await axios.post(`/api/patch-settings`, updatedSettings);
                 setSettings(updatedSettings);
 
                 if (!response.data.status) {

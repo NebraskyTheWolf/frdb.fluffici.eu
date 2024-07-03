@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
+import NextAuth, {NextAuthOptions} from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import axios from "axios";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         DiscordProvider({
             clientId: process.env.DISCORD_CLIENT_ID!,
@@ -31,4 +31,6 @@ export default NextAuth({
             return session;
         },
     },
-});
+}
+
+export default NextAuth(authOptions);

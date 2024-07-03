@@ -30,7 +30,7 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
     useEffect(() => {
         const fetchVerification = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/verifications?actorId=${session?.user.id}`);
+                const response = await axios.post(`/api/servers/${serverId}/verifications`);
                 setVerifications(response.data.data);
                 setIsLoading(false);
             } catch (error) {
@@ -48,7 +48,7 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
 
     const handleAccept = async (id: number) => {
         try {
-            const response = await axios.post(`/api/servers/${serverId}/verification?actorId=${session?.user.id}`, {
+            const response = await axios.post(`/api/servers/${serverId}/verification`, {
                 type: 'GRANT',
                 id: id
             });
@@ -65,7 +65,7 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
 
     const handleDeny = async () => {
         try {
-            const response = await axios.post(`/api/servers/${serverId}/verification?actorId=${session?.user.id}`, {
+            const response = await axios.post(`/api/servers/${serverId}/verification`, {
                 type: 'DENY',
                 id: selectedVerification,
                 reason: reason

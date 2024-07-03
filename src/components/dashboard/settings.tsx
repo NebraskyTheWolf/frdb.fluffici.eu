@@ -34,7 +34,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) 
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/settings?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/settings`);
                 setSettings(response.data);
             } catch (error) {
                 showToast('Unable to fetch server settings', 'error');
@@ -45,7 +45,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) 
 
         const fetchChannels = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/channels?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/channels`);
                 setChannels(response.data.channels.filter((channel: Channel) => channel.type === 'TEXT'));
             } catch (error) {
                 showToast('Unable to fetch channels', 'error');
@@ -54,7 +54,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) 
 
         const fetchRoles = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/roles?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/roles`);
                 setRoles(response.data.roles);
             } catch (error) {
                 showToast('Unable to fetch roles', 'error');
@@ -119,7 +119,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) 
 
     const patchSettings = async (updatedSettings: GuildSettings) => {
         try {
-            const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+            const response = await axios.post(`/api/patch-settings`, updatedSettings);
 
             if (!response.data.status) {
                 showToast(response.data.message, 'error');

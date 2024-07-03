@@ -116,7 +116,7 @@ const DashboardPage: React.FC = () => {
         const fetchQuota = async () => {
             if (session) {
                 try {
-                    const response = await axios.post(`/api/servers/${server.id}/quota?actorId=${session.user.id}`);
+                    const response = await axios.post(`/api/servers/${server.id}/quota`);
                     setQuota(response.data);
                 } catch (error) {
                     console.error('Error fetching servers:', error);

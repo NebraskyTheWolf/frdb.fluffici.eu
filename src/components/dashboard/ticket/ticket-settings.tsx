@@ -26,7 +26,7 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/settings?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/settings`);
                 setSettings(response.data);
             } catch (error) {
                 showToast('Unable to fetch server settings', 'error');
@@ -37,7 +37,7 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
 
         const fetchChannels = async () => {
             try {
-                const response = await axios.post(`/api/servers/${serverId}/channels?actorId=${actorId}`);
+                const response = await axios.post(`/api/servers/${serverId}/channels`);
                 setChannels(response.data.channels.filter((channel: Channel) => channel.type === 'TEXT'));
                 setCategories(response.data.channels.filter((channel: Channel) => channel.type === 'CATEGORY'));
             } catch (error) {
@@ -140,7 +140,7 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
 
     const patchSettings = async (updatedSettings: GuildSettings) => {
         try {
-            const response = await axios.post(`/api/patch-settings?actorId=${actorId}`, updatedSettings);
+            const response = await axios.post(`/api/patch-settings`, updatedSettings);
 
             if (!response.data.status) {
                 showToast(response.data.message, 'error');
