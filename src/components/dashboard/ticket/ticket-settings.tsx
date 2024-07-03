@@ -9,7 +9,7 @@ import { showToast } from '@/components/toast.tsx';
 import { GuildSettings } from '@/models/GuildSettings.ts';
 import dynamic from "next/dynamic";
 import 'react-quill/dist/quill.snow.css';
-
+import '../../../styles/quill-custom.css';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface TicketSettingsProps {
@@ -125,6 +125,15 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
     };
 
     const handleInputChange = (field: string, target: string) => {
+        if (field === "initialTitle" && target.length > 256) {
+            showToast("A embedded title cannot exceed 256 characters")
+            return
+        } else if (field === "initialMessage" && target.length > 4096) {
+            showToast("A embedded description cannot exceed 4096 characters")
+            return
+        }
+
+        const plainText = target.replace(/<\/?[^>]+(>|$)/g, ""); // Strip HTML tags to get plain text
         if (settings) {
             const updatedSettings: GuildSettings = {
                 ...settings,
@@ -136,7 +145,7 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                             ...settings.config.features.ticket,
                             settings: {
                                 ...settings.config.features.ticket.settings,
-                                [field]: target
+                                [field]: plainText
                             }
                         }
                     }
@@ -297,29 +306,37 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                                     className={`${settings?.config.features.ticket.settings.transcript ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}/>
                             </Switch>
                         </div>
-                        <div className="flex items-center justify-between">
-                            <label className="block text-sm font-medium text-gray-400">
-                                Enter the initial title {renderHelpIcon('The title will be displayed on the ticket channel')}
-                            </label>
-                            <input
-                                type="text"
-                                className="w-2/3 p-2 bg-gray-800 text-white rounded"
-                                onChange={e => handleInputChange('initialTitle', e.target.value)}
-                                value={settings?.config.features.ticket.settings.initialTitle || ''}
-                            />
+                        <div className="flex flex-col space-y-4">
+                            <div className="flex items-center justify-between">
+                                <label className="block text-sm font-medium text-gray-400">
+                                    Enter the initial
+                                    title {renderHelpIcon('The title will be displayed on the ticket channel')}
+                                </label>
+                                <textarea
+                                    className="w-2/3 p-2 bg-gray-900 text-white rounded border-green-400"
+                                    onChange={e => handleInputChange('initialTitle', e.target.value)}
+                                    value={settings?.config.features.ticket.settings.initialTitle || ''}
+                                    placeholder={"Enter a title..."}
+                                    rows={8}
+                                    cols={3}
+                                />
+                            </div>
                         </div>
                         <div className="flex flex-col space-y-4">
                             <div className="flex items-center justify-between">
                                 <label className="block text-sm font-medium text-gray-400">
-                                    Enter the initial message {renderHelpIcon('The description will be displayed on the ticket channel')}
+                                    Enter the initial
+                                    message {renderHelpIcon('The description will be displayed on the ticket channel')}
                                 </label>
+                                <textarea
+                                    value={settings?.config.features.ticket.settings.initialMessage || ''}
+                                    onChange={(e) => handleInputChange('initialMessage', e.target.value)}
+                                    className="w-2/3 p-2 bg-gray-900 text-white rounded border-green-400"
+                                    placeholder={"Enter a message..."}
+                                    rows={8}
+                                    cols={16}
+                                />
                             </div>
-                            <ReactQuill
-                                theme="snow"
-                                value={settings?.config.features.ticket.settings.initialMessage || ''}
-                                onChange={(e) => handleInputChange('initialMessage', e)}
-                                className="bg-gray-800 text-white rounded"
-                            />
                         </div>
                     </div>
                 </>

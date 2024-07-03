@@ -1,0 +1,45 @@
+.ql-container.ql-snow {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.ql-toolbar.ql-snow {
+    background-color: #2e2e2e;
+    border: 1px solid #444444;
+}
+
+.ql-toolbar.ql-snow .ql-picker {
+    color: #ffffff;
+}
+
+.ql-toolbar.ql-snow .ql-stroke {
+    fill: none;
+    stroke: #ffffff;
+}
+
+.ql-toolbar.ql-snow .ql-fill,
+.ql-toolbar.ql-snow .ql-stroke.ql-fill {
+    fill: #ffffff;
+}
+
+.ql-toolbar.ql-snow .ql-picker-item {
+    color: #ffffff;
+}
+
+.ql-toolbar.ql-snow .ql-picker-options {
+    background-color: #2e2e2e;
+}
+
+.ql-toolbar.ql-snow .ql-picker-label {
+    color: #ffffff;
+}
+
+.ql-container.ql-snow .ql-editor {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-color: #444444;
+}
+
+.ql-container.ql-snow .ql-editor a {
+    color: #1e90ff;
+}
