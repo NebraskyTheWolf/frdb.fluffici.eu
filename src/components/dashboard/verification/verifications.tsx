@@ -2,17 +2,9 @@ import React, { useEffect, useState } from 'react';
 import VerificationCard, { Verification } from "@/components/verification-card.tsx";
 import axios from "axios";
 import { showToast } from "@/components/toast.tsx";
-import {useSession} from "next-auth/react";
-import {getServerIconUrl} from "@/lib/utils.ts";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle
-} from "@/components/dialog.tsx";
-import {Button} from "@/components/button.tsx";
+import { useSession } from "next-auth/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/dialog.tsx";
+import { Button } from "@/components/button.tsx";
 
 interface VerificationProps {
     serverId?: string;
@@ -22,7 +14,7 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
     const [verifications, setVerifications] = useState<Verification[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [expandedId, setExpandedId] = useState<number | null>(null);
-    const { data: session } = useSession()
+    const { data: session } = useSession();
     const [showDialog, setShowDialog] = useState(false);
     const [selectedVerification, setSelectedVerification] = useState(0);
     const [reason, setReason] = useState("");
@@ -54,7 +46,7 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
             });
 
             if (response.data.status) {
-                setVerifications(verifications.map(v => v.id === id ? { ...v, status: 'ACCEPTED', verifiedBy: { username: session?.user.name, avatarUrl: session?.user.image} } : v));
+                setVerifications(verifications.map(v => v.id === id ? { ...v, status: 'ACCEPTED', verifiedBy: { username: session?.user.name, avatarUrl: session?.user.image } } : v));
             } else {
                 showToast("Unable to verify", "error");
             }
@@ -72,7 +64,7 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
             });
 
             if (response.data.status) {
-                setVerifications(verifications.map(v => v.id === selectedVerification ? { ...v, status: 'DENIED', verifiedBy: { username: session?.user.name, avatarUrl: session?.user.image} } : v));
+                setVerifications(verifications.map(v => v.id === selectedVerification ? { ...v, status: 'DENIED', verifiedBy: { username: session?.user.name, avatarUrl: session?.user.image } } : v));
             } else {
                 showToast("Unable to verify", "error");
             }
@@ -83,22 +75,22 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
 
     const handleDenyDialog = (id: number) => {
         setShowDialog(true);
-        setSelectedVerification(id)
-    }
+        setSelectedVerification(id);
+    };
 
     const handleDialogClose = () => {
         setShowDialog(false);
-    }
+    };
 
     const handleSave = async () => {
         handleDialogClose();
-        handleDeny()
+        handleDeny();
     };
 
     return (
-        <div className="min-h-screen text-white p-8">
+        <div className="min-h-screen text-white p-4 md:p-8">
             <div className="container mx-auto">
-                <div className="bg-gray-900 p-4 rounded-lg shadow-md">
+                <div className="bg-gray-900 p-4 md:p-6 rounded-lg shadow-md">
                     <h1 className="text-2xl font-semibold mb-4">Verifications</h1>
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center h-full">
@@ -133,11 +125,11 @@ const VerificationScreen: React.FC<VerificationProps> = ({ serverId }) => {
                             </DialogDescription>
                         </DialogHeader>
                         <div className="space-y-4">
-                                    <textarea
-                                        placeholder="Description"
-                                        onChange={(e) => setReason(e.target.value)}
-                                        className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
+                            <textarea
+                                placeholder="Description"
+                                onChange={(e) => setReason(e.target.value)}
+                                className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
                         </div>
                         <DialogFooter>
                             <Button onClick={handleDialogClose} className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">

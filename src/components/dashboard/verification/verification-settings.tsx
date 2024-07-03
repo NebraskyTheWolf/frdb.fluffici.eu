@@ -329,13 +329,13 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
     };
 
     return (
-        <div className="flex flex-col p-6 space-y-6 bg-gray-800 rounded-lg shadow-md">
+        <div className="flex flex-col p-4 md:p-6 space-y-4 md:space-y-6 bg-gray-800 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-white">Verification Configuration</h2>
             {isLoading ? (
                 <p className="text-white">Loading...</p>
             ) : (
                 <>
-                    <div className="flex items-center space-x-4">
+                    <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
                         <span className="text-white">Enabled {renderHelpIcon('Enable or disable verification feature')}</span>
                         <Switch
                             checked={enabled}
@@ -351,51 +351,51 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                         </Switch>
                     </div>
                     <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <label className="block text-sm font-medium text-gray-400">
+                        <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
+                            <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
                                 Select the channel where the form will be sent {renderHelpIcon('Choose the channel where verification forms will be sent.')}
                             </label>
                             <Select
                                 options={channels.map(channel => ({ value: channel.id, label: channel.name }))}
                                 onChange={handleGateUpdate}
                                 value={channels.map(channel => ({ value: channel.id, label: channel.name })).find(option => option.value === settings?.config.features.verification.settings.verificationGate)}
-                                className="w-2/3"
+                                className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
-                        <div className="flex items-center justify-between">
-                            <label className="block text-sm font-medium text-gray-400">
+                        <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
+                            <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
                                 Select the channel where verification will be sent {renderHelpIcon('Choose the channel where verification notifications will be sent.')}
                             </label>
                             <Select
                                 options={channels.map(channel => ({ value: channel.id, label: channel.name }))}
                                 onChange={handleLoggingUpdate}
                                 value={channels.map(channel => ({ value: channel.id, label: channel.name })).find(option => option.value === settings?.config.features.verification.settings.verificationLoggingChannel)}
-                                className="w-2/3"
+                                className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
-                        <div className="flex items-center justify-between">
-                            <label className="block text-sm font-medium text-gray-400">
+                        <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
+                            <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
                                 Select the unverified role that will be assigned to all new members {renderHelpIcon('Choose the role that will be assigned to unverified members.')}
                             </label>
                             <Select
                                 options={roles.map(role => ({ value: role.id, label: role.name }))}
                                 onChange={handleUnverifiedRole}
                                 value={roles.map(role => ({ value: role.id, label: role.name })).find(option => option.value === settings?.config.features.verification.settings.unverifiedRole)}
-                                className="w-2/3"
+                                className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
-                        <div className="flex items-center justify-between">
-                            <label className="block text-sm font-medium text-gray-400">
+                        <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
+                            <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
                                 Select the verified member role {renderHelpIcon('Choose the role that will be assigned to verified members.')}
                             </label>
                             <Select
                                 options={roles.map(role => ({ value: role.id, label: role.name }))}
                                 onChange={handleVerifiedRole}
                                 value={roles.map(role => ({ value: role.id, label: role.name })).find(option => option.value === settings?.config.features.verification.settings.verifiedRole)}
-                                className="w-2/3"
+                                className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
@@ -469,7 +469,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                                         onChange={(e) => setNewQuestion({ ...newQuestion, placeholder: e.target.value })}
                                         className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
-                                    <div className="flex space-x-4">
+                                    <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-4">
                                         <input
                                             type="number"
                                             placeholder="Min Characters"

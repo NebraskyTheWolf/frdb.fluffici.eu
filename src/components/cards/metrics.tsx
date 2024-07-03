@@ -27,7 +27,7 @@ const Metrics: React.FC = () => {
     useEffect(() => {
         const fetchStatistics = async () => {
             try {
-                const response = await axios.get('https://furraidapi.fluffici.eu/statistics');
+                const response = await axios.get('/api/statistics');
                 setStatistics(response.data);
             } catch (err) {
                 console.error('Failed to fetch statistics:', err);

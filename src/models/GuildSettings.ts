@@ -22,6 +22,9 @@ export interface PatchNotesAnnouncement {
 
 export interface TicketSettings extends Settings {
     categoryId: string;
+    closingCategoryId: string;
+    initialTitle: string;
+    initialMessage: string;
     ticketLoggingChannel: string;
     transcript: boolean;
 }

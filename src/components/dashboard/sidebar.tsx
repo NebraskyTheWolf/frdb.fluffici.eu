@@ -60,32 +60,15 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
     );
 
     return (
-        <div className="w-64 text-white p-4">
+        <div className="w-full lg:w-64 text-white p-4">
             <div className="flex flex-col items-center mb-6">
-                {/*${isPremium ? 'border-4 border-gold' : ''}*/}
                 <div className={`w-16 h-16 rounded-full `}>
                     <img src={getServerIconUrl(server.id, server.icon)} alt={server.name}
                          className="w-full h-full rounded-full"/>
                 </div>
-                <h2 className="mt-2 text-xl font-bold">{server.name}</h2>
-                {/*<span className="text-sm text-white">{planName}</span>*/}
+                <h2 className="mt-2 text-xl font-bold text-center">{server.name}</h2>
                 {isBlacklisted && <span className="text-sm text-red-500">Restricted</span>}
             </div>
-            {
-                /*
-                    {isPremium && (
-                        <div className="mb-4 p-4 bg-gray-800 rounded-lg shadow-md">
-                            <h3 className="text-sm font-semibold">Current Plan: {planName}</h3>
-                            <p className="text-sm font-semibold">Expires on: {new Date(premiumExpirationDate).toDateString()}</p>
-                            {isQuotaReached && (
-                                <Link href="/premium">
-                                    <Button variant="premium" className="w-full text-left mt-2">Upgrade to higher plan</Button>
-                                </Link>
-                            )}
-                        </div>
-                    )}
-                 */
-            }
             <div className="mb-4">
                 <Button
                     variant={activeSection === 'Statistics' ? 'primary' : 'outline'}
@@ -260,16 +243,6 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                     <FaClipboardList className="mr-2" /> Audit Logs
                 </Button>
             </div>
-            {
-                /*
-                    <hr className="border-gray-700 mb-4" hidden={isPremium || isBlacklisted}/>
-                    <div className="mb-4" hidden={isPremium || isBlacklisted}>
-                        <Link href="/premium">
-                            <Button variant="premium" className="w-full text-left">Get premium now!</Button>
-                        </Link>
-                    </div>
-                 */
-            }
         </div>
     );
 };

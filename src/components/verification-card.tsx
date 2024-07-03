@@ -73,10 +73,10 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
     };
 
     return (
-        <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md mb-4">
+        <div className="bg-gray-800 text-white p-4 md:p-6 rounded-lg shadow-md mb-4">
             <div className="flex justify-between items-center cursor-pointer" onClick={onToggle}>
                 <div className="flex items-center">
-                    <img src={getServerIconUrlValid(verification.avatarUrl)} alt={`${verification.username}'s avatar`} className="w-12 h-12 rounded-full mr-4"/>
+                    <img src={getServerIconUrlValid(verification.avatarUrl)} alt={`${verification.username}'s avatar`} className="w-10 h-10 md:w-12 md:h-12 rounded-full mr-4"/>
                     <div className="flex flex-col md:flex-row items-center">
                         <div className="flex flex-col mr-2">
                             <h2 className="text-lg font-semibold">{verification.username}</h2>
@@ -88,12 +88,12 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
                 <span className="text-green-500">{isExpanded ? <FaChevronUp /> : <FaChevronDown />}</span>
             </div>
             {isExpanded && (
-                <div className="mt-4 bg-gray-700 p-6 rounded-lg">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="mt-4 bg-gray-700 p-4 md:p-6 rounded-lg">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <div>
                             <h3 className="text-lg font-semibold mb-3">Questions</h3>
                             {verification.questions.map((q, index) => (
-                                <div key={index} className="bg-gray-600 p-4 rounded mb-2">
+                                <div key={index} className="bg-gray-600 p-3 md:p-4 rounded mb-2">
                                     <p className="text-sm text-gray-300"><strong>{q.title}</strong></p>
                                     <p className="text-sm text-gray-400">{q.answer}</p>
                                 </div>
@@ -102,18 +102,18 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
                         <div>
                             <h3 className="text-lg font-semibold mb-3">User Information</h3>
                             {verification.userInfo.map((info, index) => (
-                                <div key={index} className="bg-gray-600 p-4 rounded mb-2">
+                                <div key={index} className="bg-gray-600 p-3 md:p-4 rounded mb-2">
                                     <p className="text-sm text-gray-300"><strong>{info.title}:</strong> {info.data}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="flex justify-end mt-6 space-x-4">
+                    <div className="flex flex-col md:flex-row justify-end mt-4 md:mt-6 space-y-2 md:space-y-0 md:space-x-4">
                         {verification.status.toLowerCase() === 'accepted' || verification.status.toLowerCase() === 'denied' ? (
                             <div className="flex items-center space-x-2">
                                 <img src={getServerIconUrlValid(verification.verifiedBy.avatarUrl)}
                                      alt={`${verification.verifiedBy.username}'s avatar`}
-                                     className="w-10 h-10 rounded-full"/>
+                                     className="w-8 h-8 md:w-10 md:h-10 rounded-full"/>
                                 <span className="text-sm text-gray-300">Verified By: {verification.verifiedBy.username}</span>
                             </div>
                         ) : isBlacklisted ? (

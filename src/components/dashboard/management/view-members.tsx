@@ -36,7 +36,7 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
     const [selectedMemberBl, setSelectedMemberBl] = useState<Member | null>(null);
     const [showModerationDialog, setShowModerationDialog] = useState(false)
     const [showBlacklistDialog, setShowBlacklistDialog] = useState(false)
-    const { data: session } = useSession()
+    const { data: session } = useSession();
     const [reason, setReason] = useState<string>("");
 
     const fetchMembers = async (page: number = 1, filter: string = "", sortOrder: "asc" | "desc" | null = null) => {
@@ -160,7 +160,7 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
 
     const handleAddBlacklists = ({ event, props, triggerEvent, data }: any) => {
         setSelectedMemberBl(props.member);
-        setShowBlacklistDialog(true)
+        setShowBlacklistDialog(true);
     };
 
     const handleAddWhitelist = ({ event, props, triggerEvent, data }: any) => {
@@ -171,19 +171,19 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
                 });
 
                 if (response.data.status) {
-                    showToast(`${props.member.username} has been added to the whitelist`, "success")
+                    showToast(`${props.member.username} has been added to the whitelist`, "success");
                 } else {
                     showToast(response.data.message, "error");
                 }
 
-                fetchMembers(1)
+                fetchMembers(1);
             } catch (error) {
                 console.error("Error removing local-blacklist:", error);
                 showToast("Error adding local-whitelist", "error");
             }
         };
 
-        addWhitelist()
+        addWhitelist();
     };
 
     const handleModerationView = ({ event, props, triggerEvent, data }: any) => {
@@ -197,8 +197,8 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
     };
 
     return (
-        <div className="p-6 bg-gray-800 rounded-lg shadow-lg relative">
-            <h2 className="text-3xl font-bold mb-6 text-white">Members</h2>
+        <div className="p-4 md:p-6 bg-gray-800 rounded-lg shadow-lg relative">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-white">Members</h2>
             <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
             {loading ? (
                 <div className="flex justify-center items-center h-64">
@@ -208,53 +208,55 @@ const ViewMembers: React.FC<ViewMembersProps> = ({ serverId }) => {
                 <p className="text-gray-400">No members were fetched.</p>
             ) : (
                 <>
-                    <table {...getTableProps()} className="min-w-full bg-gray-900 rounded-lg overflow-hidden">
-                        <thead className="bg-gray-700">
-                        {headerGroups.map(headerGroup => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    <th
-                                        {...column.getHeaderProps()}
-                                        className="px-4 py-2 text-left text-white font-medium"
-                                    >
-                                        {column.render("Header")}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                        {rows.map(row => {
-                            prepareRow(row);
-                            return (
-                                <tr
-                                    {...row.getRowProps()}
-                                    className="border-b border-gray-700 hover:bg-gray-600 cursor-pointer"
-                                    onContextMenu={(e) => handleContextMenu(e, row.original)}
-                                >
-                                    {row.cells.map(cell => (
-                                        <td
-                                            {...cell.getCellProps()}
-                                            className="px-4 py-2 text-white"
+                    <div className="overflow-x-auto">
+                        <table {...getTableProps()} className="min-w-full bg-gray-900 rounded-lg overflow-hidden">
+                            <thead className="bg-gray-700">
+                            {headerGroups.map(headerGroup => (
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                    {headerGroup.headers.map(column => (
+                                        <th
+                                            {...column.getHeaderProps()}
+                                            className="px-2 md:px-4 py-2 text-left text-white font-medium"
                                         >
-                                            {cell.render("Cell")}
-                                        </td>
+                                            {column.render("Header")}
+                                        </th>
                                     ))}
                                 </tr>
-                            );
-                        })}
-                        </tbody>
-                    </table>
-                    <div className="flex justify-between items-center mt-4">
+                            ))}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                            {rows.map(row => {
+                                prepareRow(row);
+                                return (
+                                    <tr
+                                        {...row.getRowProps()}
+                                        className="border-b border-gray-700 hover:bg-gray-600 cursor-pointer"
+                                        onContextMenu={(e) => handleContextMenu(e, row.original)}
+                                    >
+                                        {row.cells.map(cell => (
+                                            <td
+                                                {...cell.getCellProps()}
+                                                className="px-2 md:px-4 py-2 text-white"
+                                            >
+                                                {cell.render("Cell")}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                );
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="flex flex-col md:flex-row justify-between items-center mt-4">
                         <Button
                             variant="outline"
                             onClick={() => handlePageChange(pagination?.currentPage! - 1)}
                             disabled={pagination?.isFirstPage}
-                            className="bg-gray-700 text-white py-2 px-4 rounded disabled:opacity-50"
+                            className="bg-gray-700 text-white py-2 px-4 rounded disabled:opacity-50 mb-2 md:mb-0"
                         >
                             Previous
                         </Button>
-                        <span className="text-white">
+                        <span className="text-white mb-2 md:mb-0">
                             Page {pagination?.currentPage} of {pagination?.totalPages}
                         </span>
                         <Button

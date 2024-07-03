@@ -98,20 +98,20 @@ const Statistics: React.FC<StatisticsProps> = ({ serverId }) => {
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h2 className="text-3xl font-bold mb-4 text-white">User Metrics</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="bg-gray-900 p-6 rounded-lg shadow-md flex flex-col items-center">
+                    <div className="bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md flex flex-col items-center">
                         <FaUsers className="text-4xl text-white mb-2" />
-                        <h3 className="text-xl font-bold mb-2 text-white">Total Users</h3>
-                        <p className="text-4xl text-white">{loading ? <Skeleton /> : guild?.memberCount}</p>
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">Total Users</h3>
+                        <p className="text-2xl sm:text-4xl text-white">{loading ? <Skeleton /> : guild?.memberCount}</p>
                     </div>
-                    <div className="bg-gray-900 p-6 rounded-lg shadow-md flex flex-col items-center">
+                    <div className="bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md flex flex-col items-center">
                         <FaUserPlus className="text-4xl text-white mb-2" />
-                        <h3 className="text-xl font-bold mb-2 text-white">New Users This Month</h3>
-                        <p className="text-4xl text-white">{loadingMemberCount ? <Skeleton /> : monthlyCount}</p>
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">New Users This Month</h3>
+                        <p className="text-2xl sm:text-4xl text-white">{loadingMemberCount ? <Skeleton /> : monthlyCount}</p>
                     </div>
-                    <div className="bg-gray-900 p-6 rounded-lg shadow-md flex flex-col items-center">
+                    <div className="bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md flex flex-col items-center">
                         <FaUserCheck className="text-4xl text-white mb-2" />
-                        <h3 className="text-xl font-bold mb-2 text-white">Active Users</h3>
-                        <p className="text-4xl text-white">{loadingActiveUsers ? <Skeleton /> : activeUsers}</p>
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">Active Users</h3>
+                        <p className="text-2xl sm:text-4xl text-white">{loadingActiveUsers ? <Skeleton /> : activeUsers}</p>
                     </div>
                 </div>
             </div>

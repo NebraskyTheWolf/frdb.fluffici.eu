@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     const options = {
-      strings: ["chránit", "moderovat", "zabezpečit"],
+      strings: ["protect", "moderate", "secure"],
       typeSpeed: 90,
       backSpeed: 90,
       loop: true,
@@ -40,58 +40,43 @@ const Hero: React.FC = () => {
       <section className="bg-gray-900 text-white py-8 md:py-16">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between">
           <div className="max-w-md mx-auto md:mx-0 md:mr-8 text-center md:text-left">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 button-red">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
               FurRaidDB
             </h1>
             <p className="text-base md:text-lg leading-relaxed mb-8">
-              Nejlepší způsob, jak{" "}
-              <span className="text-red-600" ref={typingElement}></span> váš
+              The best way to{" "}
+              <span className="text-red-600" ref={typingElement}></span> your
               Discord server.
             </p>
-            <div
-                className="flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4"
-            >
-              <div>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">Pozvat</Button>
-                  </DialogTrigger>
-                  <DialogContent
-                      style={{
-                        background: "#020817",
-                      }}
-                  >
-                    <DialogHeader className="text-white">
-                      <DialogTitle>Pozvánka</DialogTitle>
-                      <DialogDescription className="text-base md:text-lg text-gray-300 py-4">
-                        Pozváním FurRaidDB souhlasíte s našimi Podmínkami služby a Zásadami ochrany osobních údajů.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter className="sm:justify-start">
-                      <Link
-                          href="https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot"
-                      >
-                        <Button type="button" variant="outline">
-                          Rozumím
-                        </Button>
-                      </Link>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <div hidden={true}>
-                <Link
-                    href="/premium"
-                >
-                  <Button type="button" variant="premium">
-                    Premium
-                  </Button>
-                </Link>
-              </div>
+            <div className="flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Invite</Button>
+                </DialogTrigger>
+                <DialogContent style={{ background: "#020817" }}>
+                  <DialogHeader className="text-white">
+                    <DialogTitle>Invitation</DialogTitle>
+                    <DialogDescription className="text-base md:text-lg text-gray-300 py-4">
+                      By inviting FurRaidDB, you agree to our Terms of Service and Privacy Policy.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="sm:justify-start">
+                    <Link href="https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot">
+                      <Button type="button" variant="outline">
+                        Understand
+                      </Button>
+                    </Link>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
           <div className="hidden md:block w-64">
-            <img src="https://cdn.discordapp.com/app-icons/803015962223837184/650c1b689a2433b5f6ea61fffeae339e.png" alt="owo" className="h-64 w-64 rounded-lg"/>
+            <img
+                src="https://cdn.discordapp.com/app-icons/803015962223837184/650c1b689a2433b5f6ea61fffeae339e.png"
+                alt="FurRaidDB Logo"
+                className="h-64 w-64 rounded-lg"
+            />
           </div>
         </div>
       </section>

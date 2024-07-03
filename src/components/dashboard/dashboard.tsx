@@ -190,7 +190,7 @@ const DashboardPage: React.FC = () => {
     };
 
     return (
-        <div className="flex min-h-screen text-white p-4 md:p-8">
+        <div className="flex flex-col md:flex-row min-h-screen text-white p-4 md:p-8">
             {status === "loading" ? (
                 <p>Loading...</p>
             ) : (
@@ -198,7 +198,7 @@ const DashboardPage: React.FC = () => {
                     {!selectedServer ? (
                         <div className="w-full flex flex-col items-center p-8">
                             <h1 className="text-3xl mb-6">Select a server</h1>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                 {servers.map((server) => (
                                     <div
                                         key={server.id}
@@ -212,7 +212,7 @@ const DashboardPage: React.FC = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex w-full max-w-7xl mx-auto rounded-lg shadow-lg overflow-hidden">
+                        <div className="flex flex-col md:flex-row w-full max-w-7xl mx-auto rounded-lg shadow-lg overflow-hidden">
                             <Sidebar
                                 server={selectedServer}
                                 isBlacklisted={isBlacklisted}
@@ -227,7 +227,7 @@ const DashboardPage: React.FC = () => {
                                 whitelistQuota={quota.whitelistQuota}
                                 whitelistUsed={quota.whitelistUsed}
                             />
-                            <main className="flex-1 p-8">
+                            <main className="flex-1 p-4 md:p-8">
                                 { isBlacklisted ? (
                                     <div className="w-full max-w-2xl mt-8 bg-red-800 p-6 rounded-lg shadow-lg text-center">
                                         <FaExclamationTriangle className="text-6xl mx-auto mb-4" />

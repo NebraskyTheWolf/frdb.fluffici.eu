@@ -1,10 +1,15 @@
+"use client"
+
 import React, { useEffect, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import { Switch } from '@headlessui/react';
 import { FaQuestionCircle } from 'react-icons/fa';
 import axios from 'axios';
 import { showToast } from '@/components/toast.tsx';
-import { GuildSettings, TicketSettings } from '@/models/GuildSettings.ts';
+import { GuildSettings } from '@/models/GuildSettings.ts';
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface TicketSettingsProps {
     actorId?: string;
@@ -118,6 +123,29 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
         }
     };
 
+    const handleInputChange = (field: string, target: string) => {
+        if (settings) {
+            const updatedSettings: GuildSettings = {
+                ...settings,
+                config: {
+                    ...settings.config,
+                    features: {
+                        ...settings.config.features,
+                        ticket: {
+                            ...settings.config.features.ticket,
+                            settings: {
+                                ...settings.config.features.ticket.settings,
+                                [field]: target
+                            }
+                        }
+                    }
+                }
+            };
+            setSettings(updatedSettings);
+            patchSettings(updatedSettings);
+        }
+    };
+
     const handleFeatureSwitchChange = (value: boolean) => {
         if (settings) {
             const updatedSettings: GuildSettings = {
@@ -217,7 +245,8 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <label className="block text-sm font-medium text-gray-400">
-                                Select the category for tickets {renderHelpIcon('Select the category where tickets will be created.')}
+                                Select the category for
+                                tickets {renderHelpIcon('Select the category where tickets will be created.')}
                             </label>
                             <Select
                                 options={renderSelectOptions(categories)}
@@ -229,7 +258,21 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                         </div>
                         <div className="flex items-center justify-between">
                             <label className="block text-sm font-medium text-gray-400">
-                                Select the logging channel for tickets {renderHelpIcon('Select the channel where ticket logs will be sent.')}
+                                Select the category for closed
+                                tickets {renderHelpIcon('Select the category where closed tickets will be transferred.')}
+                            </label>
+                            <Select
+                                options={renderSelectOptions(categories)}
+                                className="w-2/3"
+                                onChange={selected => handleSelectChange('closingCategoryId', selected)}
+                                value={renderSelectOptions(categories).find(category => category.value === settings?.config.features.ticket.settings.closingCategoryId)}
+                                styles={customStyles}
+                            />
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <label className="block text-sm font-medium text-gray-400">
+                                Select the logging channel for
+                                tickets {renderHelpIcon('Select the channel where ticket logs will be sent.')}
                             </label>
                             <Select
                                 options={renderSelectOptions(channels)}
@@ -249,8 +292,33 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                                 className={`${settings?.config.features.ticket.settings.transcript ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
                             >
                                 <span className="sr-only">Enable Transcript</span>
-                                <span className={`${settings?.config.features.ticket.settings.transcript ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`} />
+                                <span
+                                    className={`${settings?.config.features.ticket.settings.transcript ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}/>
                             </Switch>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <label className="block text-sm font-medium text-gray-400">
+                                Enter the initial title {renderHelpIcon('The title will be displayed on the ticket channel')}
+                            </label>
+                            <input
+                                type="text"
+                                className="w-2/3 p-2 bg-gray-800 text-white rounded"
+                                onChange={e => handleInputChange('initialTitle', e.target.value)}
+                                value={settings?.config.features.ticket.settings.initialTitle || ''}
+                            />
+                        </div>
+                        <div className="flex flex-col space-y-4">
+                            <div className="flex items-center justify-between">
+                                <label className="block text-sm font-medium text-gray-400">
+                                    Enter the initial message {renderHelpIcon('The description will be displayed on the ticket channel')}
+                                </label>
+                            </div>
+                            <ReactQuill
+                                theme="snow"
+                                value={settings?.config.features.ticket.settings.initialMessage || ''}
+                                onChange={(e) => handleInputChange('initialMessage', e)}
+                                className="bg-gray-800 text-white rounded"
+                            />
                         </div>
                     </div>
                 </>
