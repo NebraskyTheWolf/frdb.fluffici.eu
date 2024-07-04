@@ -7,7 +7,7 @@ import Select from "react-select";
 import { Switch } from "@headlessui/react";
 import { customSelectStyles } from "@/lib/utils.ts";
 
-interface AntiScamProps {
+interface InviteTrackerProps {
     actorId: string;
     serverId: string;
 }
@@ -25,7 +25,7 @@ interface Role {
     position: number;
 }
 
-const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
+const InviteTracker: React.FC<InviteTrackerProps> = ({ actorId, serverId }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [settings, setSettings] = useState<GuildSettings | null>(null);
     const [channels, setChannels] = useState<Channel[]>([]);
@@ -74,8 +74,8 @@ const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
                     ...settings.config,
                     features: {
                         ...settings.config.features,
-                        antiScamFeature: {
-                            ...settings.config.features.antiScamFeature,
+                        inviteTracker: {
+                            ...settings.config.features.inviteTracker,
                             [field]: value
                         }
                     }
@@ -94,10 +94,10 @@ const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
                     ...settings.config,
                     features: {
                         ...settings.config.features,
-                        antiScamFeature: {
-                            ...settings.config.features.antiScamFeature,
+                        inviteTracker: {
+                            ...settings.config.features.inviteTracker,
                             settings: {
-                                ...settings.config.features.antiScamFeature.settings,
+                                ...settings.config.features.inviteTracker.settings,
                                 [field]: selectedOption.value
                             }
                         }
@@ -139,7 +139,7 @@ const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
 
     return (
         <div className="flex flex-col p-6 space-y-6 bg-gray-800 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-white">Anti Scam Settings</h2>
+            <h2 className="text-2xl font-bold text-white">Invite Tracker Settings</h2>
             {isLoading ? (
                 <p className="text-white">Loading...</p>
             ) : (
@@ -149,37 +149,25 @@ const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
                             Enabled {renderHelpIcon('Enable or disable verification feature')}
                         </span>
                         <Switch
-                            checked={settings?.config.features.antiScamFeature.enabled}
+                            checked={settings?.config.features.inviteTracker.enabled}
                             onChange={value => handleSwitchChange('enabled', value)}
-                            className={`${settings?.config.features.antiScamFeature.enabled ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+                            className={`${settings?.config.features.inviteTracker.enabled ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
                         >
-                            <span className="sr-only">Enable Anti Scam</span>
+                            <span className="sr-only">Enable Invite Tracking</span>
                             <span
-                                className={`${settings?.config.features.antiScamFeature.enabled ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}
+                                className={`${settings?.config.features.inviteTracker.enabled ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}
                             />
                         </Switch>
                     </div>
                     <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
                         <label className="block text-sm font-medium text-gray-400 w-full sm:w-1/3">
-                            Select the quarantined role {renderHelpIcon('This role will prevent the quarantined users to interact with your server, Be aware! you need to setup this role yourself!')}
-                        </label>
-                        <Select
-                            options={renderSelectOptions(roles)}
-                            className="w-full sm:w-2/3"
-                            onChange={selected => handleSelectChange('quarantinedRole', selected)}
-                            value={renderSelectOptions(roles).filter(role => settings?.config.features.antiScamFeature.settings.quarantinedRole === role.value)}
-                            styles={customSelectStyles}
-                        />
-                    </div>
-                    <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
-                        <label className="block text-sm font-medium text-gray-400 w-full sm:w-1/3">
-                            Select the channels where the quarantine logs will be sent {renderHelpIcon('All the quarantined users will appear there')}
+                            Tracking channel {renderHelpIcon('Select the channel where the logs of tracking will be sent')}
                         </label>
                         <Select
                             options={renderSelectOptions(channels)}
                             className="w-full sm:w-2/3"
-                            onChange={selected => handleSelectChange('loggingChannel', selected)}
-                            value={renderSelectOptions(channels).filter(channel => settings?.config.features.antiScamFeature.settings.loggingChannel === channel.value)}
+                            onChange={selected => handleSelectChange('trackingChannel', selected)}
+                            value={renderSelectOptions(channels).filter(channel => settings?.config.features.inviteTracker.settings.trackingChannel === channel.value)}
                             styles={customSelectStyles}
                         />
                     </div>
@@ -189,4 +177,4 @@ const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
     )
 }
 
-export default AntiScam;
+export default InviteTracker;

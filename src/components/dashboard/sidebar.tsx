@@ -5,6 +5,7 @@ import { Button } from "@/components/button.tsx";
 import { getServerIconUrl } from "@/lib/utils.ts";
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { PERMISSIONS } from "@/lib/constants.ts";
+import {FaFileCirclePlus} from "react-icons/fa6";
 
 interface SidebarProps {
     server: Guild;
@@ -153,6 +154,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                         {renderButton('Anti Scam', <FaLock className="mr-2" />, 'Protection-AntiScam', 'FurRaid Advanced+')}
                         {renderButton('Filters', <FaFilter className="mr-2" />, 'Protection-Filters', 'FurRaid Lite+')}
                         {renderButton('Auto Moderation', <FaUserShield className="mr-2" />, 'Protection-AutoModeration', 'FurRaid Advanced+')}
+                        {renderButton('Invite Tracker', <FaFileCirclePlus className="mr-2" />, 'Protection-InviteTracker', 'FurRaid Advanced+')}
                     </div>
                 )}
             </div>

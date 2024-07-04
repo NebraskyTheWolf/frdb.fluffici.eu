@@ -59,13 +59,9 @@ export default function Blacklist() {
 
         try {
             const response = await axios.get(`/api/fetch-blacklist/${userId}`);
-            if (response.data.status) {
-                setBlacklistData(response.data);
-            } else {
-                setError("User is not blacklisted");
-            }
+            setBlacklistData(response.data);
         } catch (err) {
-            setError("An error occurred while fetching the blacklist data");
+            setError("The user is not blacklisted");
         } finally {
             setLoading(false);
         }

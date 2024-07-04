@@ -63,6 +63,11 @@ export interface AutoModerationSettings extends Settings {
     modules: Module[];
 }
 
+export interface AntiScamSettings extends Settings {
+    loggingChannel: string;
+    quarantinedRole: string;
+}
+
 export interface TicketFeature extends Feature {
     settings: TicketSettings;
 }
@@ -91,6 +96,10 @@ export interface AutoModerationFeature extends Feature {
     settings: AutoModerationSettings;
 }
 
+export interface AntiScamFeature extends Feature {
+    settings: AntiScamSettings;
+}
+
 export interface Question {
     title: string;
     placeholder: string;
@@ -113,6 +122,7 @@ export interface Features {
     localBlacklist: BlacklistFeature;
     welcoming: WelcomingFeature;
     autoModeration: AutoModerationFeature;
+    antiScamFeature: AntiScamFeature;
 }
 
 export interface FurRaidConfig {
