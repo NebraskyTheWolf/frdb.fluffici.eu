@@ -26,7 +26,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
 } from "@/components/dropdown-menu.tsx";
-import {random} from "nanoid";
+import { random } from "nanoid";
 
 interface Member {
     id: string;
@@ -58,8 +58,6 @@ interface Message {
     };
     attachmentUrl?: string;
 }
-
-
 
 const pusher = new Pusher('42f3a4cad068043e1452', {
     cluster: 'eu'
@@ -174,6 +172,9 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
     };
 
     const handleControlMenuClick = async (action: string, member: Member | undefined) => {
+        setShowSelectMember(false);
+        setSelectedAction(null);
+
         switch (action) {
             case 'close': {
                 try {
@@ -217,8 +218,6 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                 break;
             }
         }
-
-        setShowSelectMember(false)
     };
 
     return (

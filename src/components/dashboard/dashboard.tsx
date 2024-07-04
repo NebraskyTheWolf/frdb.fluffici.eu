@@ -2,8 +2,6 @@
 
 import {getSession, GetSessionParams, useSession} from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { showToast } from "@/components/toast";
 import Sidebar from "@/components/dashboard/sidebar";
 import axios from "axios";
 import { getServerIconUrl } from "@/lib/utils.ts";
@@ -29,6 +27,11 @@ import GeneralSettings from "@/components/dashboard/settings.tsx";
 import TicketSettingsComponent from "@/components/dashboard/ticket/ticket-settings.tsx";
 import AuditLogsView from "@/components/dashboard/audits-logs.tsx";
 import TicketSupport from "@/components/dashboard/ticket/ticket-support.tsx";
+import Filters from "@/components/dashboard/security/filters.tsx";
+import AntiScam from "@/components/dashboard/security/antiscam.tsx";
+import AntiRaid from "@/components/dashboard/security/antiraid.tsx";
+import AutoModeration from "@/components/dashboard/security/automod.tsx";
+import Changelog from "./changelog";
 
 export async function getServerSideProps(context: { req: GetSessionParams | undefined; }) {
     const session = await getSession(context.req)
@@ -46,11 +49,6 @@ export async function getServerSideProps(context: { req: GetSessionParams | unde
         props: {},
     };
 }
-
-const AntiRaid = () => <div>Anti Raid Content</div>;
-const AntiScam = () => <div>Anti Scam Content</div>;
-const Filters = () => <div>Filters Content</div>;
-const AutoModeration = () => <div>Auto Moderation Content</div>;
 
 interface Server {
     id: string;
@@ -165,13 +163,13 @@ const DashboardPage: React.FC = () => {
             case 'MemberManagement-Whitelist':
                 return <Whitelist serverId={selectedServer?.id} />;
             case 'Protection-AntiRaid':
-                return <AntiRaid />;
+                return <AntiRaid serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-AntiScam':
-                return <AntiScam />;
+                return <AntiScam serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-Filters':
-                return <Filters />;
+                return <Filters serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-AutoModeration':
-                return <AutoModeration />;
+                return <AutoModeration serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Verification-Verifications':
                 return <VerificationScreen serverId={selectedServer?.id} />;
             case 'Verification-Configuration':
@@ -185,7 +183,7 @@ const DashboardPage: React.FC = () => {
             case 'AuditLogs':
                 return <AuditLogsView serverId={selectedServer?.id} actorId={session?.user.id} />;
             default:
-                return <h1>Welcome to your dashboard, {session?.user?.name}!</h1>;
+                return <Changelog />;
         }
     };
 
