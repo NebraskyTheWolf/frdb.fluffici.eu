@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FaLightbulb, FaBug, FaStickyNote, FaUser, FaEnvelope, FaCommentDots, FaTimes} from 'react-icons/fa';
 import {useSession} from "next-auth/react";
 import {Button} from "@/components/button.tsx";
 import {showToast} from "@/components/toast.tsx";
+import axios from "axios";
 
 interface Changelog {
     title: string;
@@ -21,6 +22,20 @@ const Changelog: React.FC = () => {
     const [changelog, setChangelog] = useState<Changelog>()
     const [message, setMessage] = useState<string>()
     const { data: session, status } = useSession()
+
+    useEffect(() => {
+        const fetchChangelogs = async () => {
+            try {
+                const response = await axios.get('/api/changelogs');
+                setChangelog(response.data);
+                setLoading(false);
+            } catch (error) {
+                showToast("Unable to load the changelogs", "error")
+            }
+        }
+
+        fetchChangelogs()
+    }, [])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
