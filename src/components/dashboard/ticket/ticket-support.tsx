@@ -1,16 +1,37 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import Pusher from "pusher-js";
-import { FaChevronLeft, FaPaperPlane, FaEllipsisV, FaUpload, FaUser, FaTrash, FaCogs, FaTimes, FaPlus, FaClipboard } from "react-icons/fa";
+import {
+    FaChevronLeft,
+    FaPaperPlane,
+    FaEllipsisV,
+    FaCogs,
+    FaTimes,
+    FaClipboard,
+    FaUserMinus,
+    FaUserPlus
+} from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/button.tsx";
-import { useDropzone } from 'react-dropzone';
 import { Menu, Item, useContextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
-import {showToast} from "@/components/toast.tsx";
+import { showToast } from "@/components/toast.tsx";
 import TicketList from "@/components/dashboard/ticket/ticket-list.tsx";
+import SelectDialog from "@/components/selectdialog.tsx";
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+} from "@/components/dropdown-menu.tsx";
+import {random} from "nanoid";
+
+interface Member {
+    id: string;
+    name: string;
+}
 
 interface Ticket {
     guildId: string;
@@ -38,6 +59,8 @@ interface Message {
     attachmentUrl?: string;
 }
 
+
+
 const pusher = new Pusher('42f3a4cad068043e1452', {
     cluster: 'eu'
 });
@@ -52,12 +75,15 @@ const MENU_ID_CHAT = "chat-context-menu";
 const MENU_ID_TICKET = "ticket-context-menu";
 
 const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
+    const [showSelectMember, setShowSelectMember] = useState<boolean>(false);
+    const [selectedAction, setSelectedAction] = useState<string | null>(null);
     const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState<string>("");
     const { data: session } = useSession();
     const [loading, setLoading] = useState<boolean>(true);
     const [showTranscript, setShowTranscript] = useState<boolean>(false);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const { show: showUserContextMenu } = useContextMenu({ id: MENU_ID_USER });
     const { show: showChatContextMenu } = useContextMenu({ id: MENU_ID_CHAT });
@@ -70,25 +96,33 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
         if (selectedTicket) {
             const fetchMessages = async () => {
                 try {
-                    const response = await axios.post(`/api/servers/${serverId}/fetch-ticket-messages`, {
-                        ticketId: selectedTicket.ticketId,
+                    const response = await axios.post(`/api/servers/${serverId}/ticket-messages`, { ticketId: selectedTicket.ticketId }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
                     });
-                    setMessages(response.data);
+                    setMessages(response.data.sort((a: Message, b: Message) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
                     setLoading(false);
+                    scrollToBottom();
                 } catch (err) {
                     showToast("Unable to fetch messages", "error");
                 }
             };
 
+            if (selectedTicket.status === "CLOSED")
+                setShowTranscript(true);
+
             fetchMessages();
 
             const channel = pusher.subscribe(`ticket-${selectedTicket.ticketId}`);
             channel.bind('new-message', (data: Message) => {
-                setMessages((prevMessages) => [...prevMessages, data]);
+                setMessages((prevMessages) => [...prevMessages, data].sort((a: Message, b: Message) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
+                scrollToBottom();
             });
 
             channel.bind('ticket-closed', () => {
                 setShowTranscript(true);
+                selectedTicket.status = "CLOSED";
                 showToast("The ticket has been closed by the user", "info");
             });
 
@@ -96,7 +130,11 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                 pusher.unsubscribe(`ticket-${selectedTicket.ticketId}`);
             };
         }
-    }, []);
+    }, [selectedTicket]);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     const handleSendMessage = async () => {
         if (!newMessage.trim()) return;
@@ -117,10 +155,11 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                 content: newMessage
             });
 
-            setMessages((prevMessages) => [...prevMessages!, message]);
+            setMessages((prevMessages) => [...prevMessages, message].sort((a: Message, b: Message) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
             setNewMessage("");
+            scrollToBottom();
         } catch (err) {
-            showToast("Unable to send message", "error")
+            showToast("Unable to send message", "error");
         }
     };
 
@@ -134,21 +173,52 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
         showChatContextMenu({ event, props: { message } });
     };
 
-    const handleControlMenuClick = (action: string) => {
+    const handleControlMenuClick = async (action: string, member: Member | undefined) => {
         switch (action) {
-            case 'close':
-                // Add logic to close ticket
+            case 'close': {
+                try {
+                    await axios.post(`/api/servers/${serverId}/patch-ticket`, {
+                        ticketId: selectedTicket?.ticketId,
+                        type: 'CLOSE'
+                    });
+
+                    showToast(`${selectedTicket?.username}'s ticket is now closed`, "success");
+                } catch (error) {
+                    showToast("An error occurred while closing the ticket", "error");
+                }
                 break;
-            case 'addMember':
-                // Add logic to add member
+            }
+            case 'addMember': {
+                try {
+                    await axios.post(`/api/servers/${serverId}/patch-ticket`, {
+                        ticketId: selectedTicket?.ticketId,
+                        type: 'ADD_USER',
+                        targetId: member?.id
+                    });
+
+                    showToast(`${member?.name} is now added to ${selectedTicket?.username}'s ticket`, "success");
+                } catch (error) {
+                    showToast("An error occurred while adding a user to the ticket", "error");
+                }
                 break;
-            case 'transcript':
-                setShowTranscript(true);
+            }
+            case 'removeMember': {
+                try {
+                    await axios.post(`/api/servers/${serverId}/patch-ticket`, {
+                        ticketId: selectedTicket?.ticketId,
+                        type: 'REMOVE_USER',
+                        targetId: member?.id
+                    });
+
+                    showToast(`${member?.name} is now removed from ${selectedTicket?.username}'s ticket`, "success");
+                } catch (error) {
+                    showToast("An error occurred while removing a user from the ticket", "error");
+                }
                 break;
-            case 'deleteChannel':
-                // Add logic to delete channel
-                break;
+            }
         }
+
+        setShowSelectMember(false)
     };
 
     return (
@@ -165,45 +235,74 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                                 <p className="text-sm text-gray-400">Status: {selectedTicket.status}</p>
                                 <p className="text-sm text-gray-400">Created At: {selectedTicket.createdAt}</p>
                             </div>
-                            <Button variant="outline" className="bg-blue-500 text-white py-2 px-4 rounded" onClick={() => handleControlMenuClick('menu')}>
-                                <FaCogs />
-                            </Button>
+                            {!showTranscript && (
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline" className="bg-blue-500 text-white py-2 px-4 rounded">
+                                            <FaCogs />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent sideOffset={5}>
+                                        <DropdownMenuItem onSelect={() => handleControlMenuClick('close', undefined)}>
+                                            <FaTimes className="mr-2" /> Close Ticket
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onSelect={() => {
+                                            setShowSelectMember(true);
+                                            setSelectedAction("addMember");
+                                        }}>
+                                            <FaUserPlus className="mr-2" /> Add Member
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onSelect={() => {
+                                            setShowSelectMember(true);
+                                            setSelectedAction("removeMember");
+                                        }}>
+                                            <FaUserMinus className="mr-2" /> Remove Member
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            )}
                         </div>
                     </div>
                     {showTranscript ? (
-                        <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-4 h-64 overflow-y-scroll">
+                        <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-4 h-96 overflow-y-scroll">
                             <h2 className="text-xl font-bold text-white mb-4">Transcript</h2>
                             {messages.map((message) => (
-                                <div key={message.ticketId} className="mb-4">
+                                <div key={message.messageId} className="mb-4">
                                     <div className="flex items-center mb-2">
-                                        <img src={message.sender.avatarUrl} alt={`${message.sender.username}'s avatar`} className="w-8 h-8 rounded-full mr-2" />
+                                        <img src={message.sender.avatarUrl} alt={`${message.sender.username}'s avatar`}
+                                             className="w-8 h-8 rounded-full mr-2"/>
                                         <span className="text-white font-semibold">{message.sender.username}</span>
-                                        <span className="text-sm text-gray-400 ml-2">{message.createdAt}</span>
+                                        <span
+                                            className="text-sm text-gray-400 ml-2">{new Date(message.createdAt).toLocaleString()}</span>
                                     </div>
                                     <p className="text-gray-300">{message.messageContent}</p>
-                                    {message.attachmentUrl && <a href={message.attachmentUrl} className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">View Attachment</a>}
+                                    {message.attachmentUrl &&
+                                        <a href={message.attachmentUrl} className="text-blue-500 underline"
+                                           target="_blank" rel="noopener noreferrer">View Attachment</a>}
                                 </div>
                             ))}
+                            <div ref={messagesEndRef}/>
                         </div>
                     ) : loading ? (
-                            <div className="flex justify-center items-center h-64">
-                                <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 animate-spin"></div>
-                            </div>
-                        ) : (
+                        <div className="flex justify-center items-center h-96">
+                            <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 animate-spin"></div>
+                        </div>
+                    ) : (
                         <>
-                            <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-4 h-64 overflow-y-scroll">
+                            <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-4 h-96 overflow-y-scroll">
                                 {messages.map((message) => (
                                     <div key={message.messageId} className="mb-4">
                                         <div className="flex items-center mb-2">
                                             <img src={message.sender.avatarUrl} alt={`${message.sender.username}'s avatar`} className="w-8 h-8 rounded-full mr-2" />
                                             <span className="text-white font-semibold" onContextMenu={(e) => handleUserContextMenu(e, message)}>{message.sender.username}</span>
-                                            <span className="text-sm text-gray-400 ml-2">{message.createdAt}</span>
+                                            <span className="text-sm text-gray-400 ml-2">{new Date(message.createdAt).toLocaleString()}</span>
                                             <FaEllipsisV className="ml-auto cursor-pointer text-white" onContextMenu={(e) => handleChatContextMenu(e, message)} />
                                         </div>
                                         <p className="text-gray-300">{message.messageContent}</p>
                                         {message.attachmentUrl && <a href={message.attachmentUrl} className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">View Attachment</a>}
                                     </div>
                                 ))}
+                                <div ref={messagesEndRef} />
                             </div>
                             <div className="flex items-center">
                                 <input
@@ -228,22 +327,14 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                     />
                 </>
             )}
-            <Menu id={MENU_ID_CHAT} className="bg-gray-700 text-white rounded-lg shadow-lg contexify_theme-dark">
-                <Item onClick={() => console.log("Edit Message")}>
-                    <FaUser className="mr-2" /> Edit Message
-                </Item>
-                <Item onClick={() => console.log("Delete Message")}>
-                    <FaTrash className="mr-2" /> Delete Message
-                </Item>
-            </Menu>
-            <Menu id={MENU_ID_TICKET} className="bg-gray-700 text-white rounded-lg shadow-lg contexify_theme-dark">
-                <Item onClick={() => handleControlMenuClick('close')}>
-                    <FaTimes className="mr-2" /> Close Ticket
-                </Item>
-                <Item onClick={() => handleControlMenuClick('transcript')}>
-                    <FaClipboard className="mr-2" /> Create Transcript
-                </Item>
-            </Menu>
+
+            {showSelectMember && (
+                <SelectDialog
+                    key={random(122).toString()}
+                    serverId={serverId!}
+                    onClick={(m) => handleControlMenuClick(selectedAction!, m) }
+                />
+            )}
         </div>
     );
 };
