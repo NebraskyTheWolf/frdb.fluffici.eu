@@ -85,7 +85,7 @@ const Navbar = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             if (session) {
-                const response = await axios.get(`/api/is-staff/${session?.user.id}`);
+                const response = await axios.get(`/api/is-staff`);
                 setIsStaff(response.data.isStaff);
             } else {
                 setIsStaff(false);

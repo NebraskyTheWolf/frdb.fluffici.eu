@@ -36,9 +36,19 @@ const Changelog: React.FC = () => {
         fetchChangelogs()
     }, [])
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        showToast("Not implemented yet", "error")
+
+        try {
+            await axios.post('/api/send-feedback', {
+                message: message
+            })
+
+            setMessage("")
+            showToast("Thank your for your feedback, your feedback has been sent to our Headquarter!", "success")
+        } catch (error) {
+            showToast("Unable to send your feedback, please try again later.", "error")
+        }
     };
 
     return (
@@ -121,19 +131,6 @@ const Changelog: React.FC = () => {
                                     id="name"
                                     className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-700 text-gray-200"
                                     value={session?.user.name}
-                                    disabled={true}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email"
-                                       className="block text-sm font-medium text-gray-300 flex items-center">
-                                    <FaEnvelope className="mr-2"/> Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    className="mt-1 block w-full p-2 border border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-700 text-gray-200"
-                                    value={session?.user.email}
                                     disabled={true}
                                 />
                             </div>
