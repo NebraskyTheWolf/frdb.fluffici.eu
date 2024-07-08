@@ -24,11 +24,17 @@ interface Role {
     position: number;
 }
 
+interface Command {
+    id: string;
+    name: string;
+}
+
 const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [settings, setSettings] = useState<GuildSettings | null>(null);
     const [channels, setChannels] = useState<Channel[]>([]);
     const [roles, setRoles] = useState<Role[]>([]);
+    const [commands, setCommands] = useState<Command[]>([]);
 
     useEffect(() => {
         const fetchSettings = async () => {
@@ -60,9 +66,19 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) 
             }
         };
 
+        const fetchCommands = async () => {
+            try {
+                const response = await axios.post(`/api/commands`);
+                setCommands(response.data);
+            } catch (error) {
+                showToast('Unable to fetch roles', 'error');
+            }
+        };
+
         fetchSettings();
         fetchChannels();
         fetchRoles();
+        fetchCommands();
     }, [serverId, actorId]);
 
     const handleMultiSelectChange = (field: string, selectedOptions: any) => {
@@ -231,11 +247,11 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) 
                             Select the disabled commands {renderHelpIcon('These commands will be disabled.')}
                         </label>
                         <Select
-                            options={renderSelectOptions(roles)}
+                            options={renderSelectOptions(commands)}
                             isMulti
                             className="w-full sm:w-2/3"
                             onChange={selected => handleMultiSelectChange('disabledCommands', selected)}
-                            value={renderSelectOptions(roles).filter(role => settings?.config.settings.disabledCommands.includes(role.value))}
+                            value={renderSelectOptions(commands).filter(role => settings?.config.settings.disabledCommands.includes(role.value))}
                             styles={customStyles}
                         />
                     </div>

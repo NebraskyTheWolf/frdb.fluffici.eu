@@ -16,8 +16,6 @@ export default async function handler(
     const session = await getServerSession(req, res, authOptions)
     if (!session)
         return res.status(401).json({ status: false, error: 'Unauthorized' });
-    if (req.body.message == undefined || req.body.message.length <= 8)
-        return res.status(400).json({ status: false, error: 'Invalid message' });
 
     try {
         const response = await axios.post(`https://discord.com/api/webhooks/1259902002595631135/${process.env.FEEDBACK_TOKEN}`, {
