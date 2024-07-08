@@ -27,6 +27,7 @@ export interface TicketSettings extends Settings {
     initialMessage: string;
     ticketLoggingChannel: string;
     transcript: boolean;
+    autoCloseOnUserLeave: boolean;
 }
 
 export interface VerificationSettings extends Settings {

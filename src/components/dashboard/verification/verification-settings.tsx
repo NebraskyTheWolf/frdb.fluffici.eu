@@ -289,6 +289,17 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
         await handlePatchQuestions(updatedSettings);
     };
 
+    const handleSendForm = async () => {
+        try {
+            await axios.post(`/api/servers/${serverId}/summon-interaction`, {
+                type: 'VERIFICATION_FORM'
+            });
+            showToast("The verification form has been sent to your server", "success")
+        } catch (error) {
+            showToast("A error occurred while sending the verification form", "error")
+        }
+    }
+
     const renderHelpIcon = (message: string) => (
         <div className="relative group">
             <FaQuestionCircle className="text-gray-500 hover:text-gray-300 cursor-pointer" />
@@ -335,8 +346,10 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                 <p className="text-white">Loading...</p>
             ) : (
                 <>
-                    <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
-                        <span className="text-white">Enabled {renderHelpIcon('Enable or disable verification feature')}</span>
+                    <div
+                        className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
+                        <span
+                            className="text-white">Enabled {renderHelpIcon('Enable or disable verification feature')}</span>
                         <Switch
                             checked={enabled}
                             onChange={handleSwitchState}
@@ -350,51 +363,78 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                             />
                         </Switch>
                     </div>
+                    <div
+                        className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
+                        <span className="text-white">Send verification form {renderHelpIcon('This button will send the verification form to allow user to send their applications')}</span>
+                        <Button
+                            onClick={handleSendForm}
+                            variant={settings?.config.features.verification.settings.verificationGate != null ? "premium" : "destructive"}
+                            disabled={settings?.config.features.verification.settings.verificationGate == null}
+                        >
+                            {settings?.config.features.verification.settings.verificationGate != null ? "Send form" : 'Please select a gate channel first!'}
+                        </Button>
+                    </div>
                     <div className="space-y-4">
                         <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
                             <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
-                                Select the channel where the form will be sent {renderHelpIcon('Choose the channel where verification forms will be sent.')}
+                                Select the channel where the form will be
+                                sent {renderHelpIcon('Choose the channel where verification forms will be sent.')}
                             </label>
                             <Select
-                                options={channels.map(channel => ({ value: channel.id, label: channel.name }))}
+                                options={channels.map(channel => ({value: channel.id, label: channel.name}))}
                                 onChange={handleGateUpdate}
-                                value={channels.map(channel => ({ value: channel.id, label: channel.name })).find(option => option.value === settings?.config.features.verification.settings.verificationGate)}
+                                value={channels.map(channel => ({
+                                    value: channel.id,
+                                    label: channel.name
+                                })).find(option => option.value === settings?.config.features.verification.settings.verificationGate)}
                                 className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
                         <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
                             <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
-                                Select the channel where verification will be sent {renderHelpIcon('Choose the channel where verification notifications will be sent.')}
+                                Select the channel where verification will be
+                                sent {renderHelpIcon('Choose the channel where verification notifications will be sent.')}
                             </label>
                             <Select
-                                options={channels.map(channel => ({ value: channel.id, label: channel.name }))}
+                                options={channels.map(channel => ({value: channel.id, label: channel.name}))}
                                 onChange={handleLoggingUpdate}
-                                value={channels.map(channel => ({ value: channel.id, label: channel.name })).find(option => option.value === settings?.config.features.verification.settings.verificationLoggingChannel)}
+                                value={channels.map(channel => ({
+                                    value: channel.id,
+                                    label: channel.name
+                                })).find(option => option.value === settings?.config.features.verification.settings.verificationLoggingChannel)}
                                 className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
                         <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
                             <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
-                                Select the unverified role that will be assigned to all new members {renderHelpIcon('Choose the role that will be assigned to unverified members.')}
+                                Select the unverified role that will be assigned to all new
+                                members {renderHelpIcon('Choose the role that will be assigned to unverified members.')}
                             </label>
                             <Select
-                                options={roles.map(role => ({ value: role.id, label: role.name }))}
+                                options={roles.map(role => ({value: role.id, label: role.name}))}
                                 onChange={handleUnverifiedRole}
-                                value={roles.map(role => ({ value: role.id, label: role.name })).find(option => option.value === settings?.config.features.verification.settings.unverifiedRole)}
+                                value={roles.map(role => ({
+                                    value: role.id,
+                                    label: role.name
+                                })).find(option => option.value === settings?.config.features.verification.settings.unverifiedRole)}
                                 className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
                         </div>
                         <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
                             <label className="block text-sm font-medium text-gray-400 w-full md:w-1/3">
-                                Select the verified member role {renderHelpIcon('Choose the role that will be assigned to verified members.')}
+                                Select the verified member
+                                role {renderHelpIcon('Choose the role that will be assigned to verified members.')}
                             </label>
                             <Select
-                                options={roles.map(role => ({ value: role.id, label: role.name }))}
+                                options={roles.map(role => ({value: role.id, label: role.name}))}
                                 onChange={handleVerifiedRole}
-                                value={roles.map(role => ({ value: role.id, label: role.name })).find(option => option.value === settings?.config.features.verification.settings.verifiedRole)}
+                                value={roles.map(role => ({
+                                    value: role.id,
+                                    label: role.name
+                                })).find(option => option.value === settings?.config.features.verification.settings.verifiedRole)}
                                 className="w-full md:w-2/3"
                                 styles={customStyles}
                             />
@@ -428,13 +468,17 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                                                         ref={provided.innerRef}
                                                         className="p-4 bg-gray-700 rounded-lg shadow-md flex justify-between items-center"
                                                     >
-                                                        <div onClick={() => handleEditQuestion(index)} className="flex-1 cursor-pointer">
+                                                        <div onClick={() => handleEditQuestion(index)}
+                                                             className="flex-1 cursor-pointer">
                                                             <h4 className="text-lg font-bold text-white">{question.title}</h4>
                                                             <p className="text-sm text-gray-300">{question.placeholder}</p>
-                                                            <p className="text-sm text-gray-400">Min Characters: {question.min}, Max Characters: {question.max}</p>
+                                                            <p className="text-sm text-gray-400">Min
+                                                                Characters: {question.min}, Max
+                                                                Characters: {question.max}</p>
                                                         </div>
-                                                        <Button onClick={() => handleDeleteQuestion(index)} variant="destructive">
-                                                            <FaTrash />
+                                                        <Button onClick={() => handleDeleteQuestion(index)}
+                                                                variant="destructive">
+                                                            <FaTrash/>
                                                         </Button>
                                                     </div>
                                                 )}
@@ -460,37 +504,46 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                                         type="text"
                                         placeholder="Title"
                                         value={newQuestion.title}
-                                        onChange={(e) => setNewQuestion({ ...newQuestion, title: e.target.value })}
+                                        onChange={(e) => setNewQuestion({...newQuestion, title: e.target.value})}
                                         className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     <textarea
                                         placeholder="Description"
                                         value={newQuestion.placeholder}
-                                        onChange={(e) => setNewQuestion({ ...newQuestion, placeholder: e.target.value })}
+                                        onChange={(e) => setNewQuestion({...newQuestion, placeholder: e.target.value})}
                                         className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
-                                    <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-4">
+                                    <div
+                                        className="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-4">
                                         <input
                                             type="number"
                                             placeholder="Min Characters"
                                             value={newQuestion.min}
-                                            onChange={(e) => setNewQuestion({ ...newQuestion, min: parseInt(e.target.value) })}
+                                            onChange={(e) => setNewQuestion({
+                                                ...newQuestion,
+                                                min: parseInt(e.target.value)
+                                            })}
                                             className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                         <input
                                             type="number"
                                             placeholder="Max Characters"
                                             value={newQuestion.max}
-                                            onChange={(e) => setNewQuestion({ ...newQuestion, max: parseInt(e.target.value) })}
+                                            onChange={(e) => setNewQuestion({
+                                                ...newQuestion,
+                                                max: parseInt(e.target.value)
+                                            })}
                                             className="w-full p-3 bg-gray-800 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
                                 </div>
                                 <DialogFooter>
-                                    <Button onClick={handleDialogClose} className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
+                                    <Button onClick={handleDialogClose}
+                                            className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
                                         Cancel
                                     </Button>
-                                    <Button onClick={handleSaveQuestion} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                                    <Button onClick={handleSaveQuestion}
+                                            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                                         Save
                                     </Button>
                                 </DialogFooter>
@@ -515,10 +568,12 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
                                     />
                                 </div>
                                 <DialogFooter>
-                                    <Button onClick={handleDialogCloseDesc} className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
+                                    <Button onClick={handleDialogCloseDesc}
+                                            className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded">
                                         Cancel
                                     </Button>
-                                    <Button onClick={handleSaveDesc} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                                    <Button onClick={handleSaveDesc}
+                                            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                                         Save
                                     </Button>
                                 </DialogFooter>

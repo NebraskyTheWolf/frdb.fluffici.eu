@@ -306,6 +306,20 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                                     className={`${settings?.config.features.ticket.settings.transcript ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}/>
                             </Switch>
                         </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-gray-400 flex items-center">
+                                Auto closing orphan ticket {renderHelpIcon('Closing tickets automatically when a member have a opened ticket and leave your server')}
+                            </span>
+                            <Switch
+                                checked={settings?.config.features.ticket.settings.autoCloseOnUserLeave}
+                                onChange={value => handleSwitchChange('autoCloseOnUserLeave', value)}
+                                className={`${settings?.config.features.ticket.settings.autoCloseOnUserLeave ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+                            >
+                                <span className="sr-only">Enable Transcript</span>
+                                <span
+                                    className={`${settings?.config.features.ticket.settings.autoCloseOnUserLeave ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}/>
+                            </Switch>
+                        </div>
                         <div className="flex flex-col space-y-4">
                             <div className="flex items-center justify-between">
                                 <label className="block text-sm font-medium text-gray-400">
