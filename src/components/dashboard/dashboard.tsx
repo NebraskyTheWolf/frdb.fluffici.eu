@@ -1,6 +1,6 @@
 "use client";
 
-import {getSession, GetSessionParams, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/dashboard/sidebar";
 import axios from "axios";
@@ -27,7 +27,6 @@ import GeneralSettings from "@/components/dashboard/settings.tsx";
 import TicketSettingsComponent from "@/components/dashboard/ticket/ticket-settings.tsx";
 import AuditLogsView from "@/components/dashboard/audits-logs.tsx";
 import TicketSupport from "@/components/dashboard/ticket/ticket-support.tsx";
-import Filters from "@/components/dashboard/security/filters.tsx";
 import AntiScam from "@/components/dashboard/security/antiscam.tsx";
 import AntiRaid from "@/components/dashboard/security/antiraid.tsx";
 import AutoModeration from "@/components/dashboard/security/automod.tsx";
@@ -159,8 +158,6 @@ const DashboardPage: React.FC = () => {
                 return <AntiRaid serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-AntiScam':
                 return <AntiScam serverId={selectedServer?.id!} actorId={session?.user.id!} />;
-            case 'Protection-Filters':
-                return <Filters serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-AutoModeration':
                 return <AutoModeration serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-InviteTracker':

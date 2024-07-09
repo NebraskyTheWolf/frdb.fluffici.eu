@@ -7,6 +7,7 @@ import {Switch} from "@headlessui/react";
 import Select, { components } from "react-select";
 import {customSelectStyles} from "@/lib/utils.ts";
 import {FaShield} from "react-icons/fa6";
+import {defaultSettings} from "@/lib/constants.ts";
 
 interface AntiRaidProps {
     actorId: string;
@@ -28,7 +29,7 @@ const SENSITIVITY = [
 
 const AntiRaid: React.FC<AntiRaidProps> = ({ actorId, serverId}) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [settings, setSettings] = useState<GuildSettings | null>(null);
+    const [settings, setSettings] = useState<GuildSettings>(defaultSettings(serverId!));
     const [channels, setChannels] = useState<Channel[]>([]);
 
     useEffect(() => {

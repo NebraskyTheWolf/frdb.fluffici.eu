@@ -9,6 +9,7 @@ import { Switch } from "@headlessui/react";
 import { customSelectStyles } from "@/lib/utils.ts";
 import ModuleDialog from '../../moduledialog.tsx';
 import {Button} from "@/components/button.tsx";
+import {defaultSettings} from "@/lib/constants.ts";
 
 interface AutoModerationProps {
     actorId: string;
@@ -52,7 +53,7 @@ const defaultModules: Module[] = [
 
 const AutoModeration: React.FC<AutoModerationProps> = ({ actorId, serverId }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [settings, setSettings] = useState<GuildSettings | null>(null);
+    const [settings, setSettings] = useState<GuildSettings>(defaultSettings(serverId!));
     const [channels, setChannels] = useState<Channel[]>([]);
     const [modules, setModules] = useState<Module[]>(defaultModules);
     const [isDialogOpen, setIsDialogOpen] = useState(false);

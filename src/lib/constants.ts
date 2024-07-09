@@ -1,3 +1,5 @@
+import {GuildSettings} from "@/models/GuildSettings.ts";
+
 export const PERMISSIONS = {
     CREATE_INSTANT_INVITE: 1 << 0,
     KICK_MEMBERS: 1 << 1,
@@ -30,3 +32,101 @@ export const PERMISSIONS = {
     MANAGE_ROLES: 1 << 28,
     MANAGE_WEBHOOKS: 1 << 29
 };
+
+
+export const defaultSettings = (id: string): GuildSettings => {
+    return {
+        guildId: id,
+        loggingChannel: "",
+        config: {
+            settings: {
+                disabledCommands: [],
+                exemptedChannels: [],
+                exemptedRoles: [],
+                isUsingGlobalBlacklist: true,
+                isUsingJoinLeaveInformation: true,
+                isUsingLocalBlacklist: true,
+                language: 'en',
+                patchNotesAnnouncement: {
+                    channel: "",
+                    enabled: ""
+                },
+                staffRoles: [],
+                whitelistOverride: true
+            },
+            features: {
+                welcoming: {
+                    enabled: false,
+                    settings: {
+                        welcomeChannel: "",
+                        goodbyeChannel: ""
+                    }
+                },
+                autoModeration: {
+                    enabled: false,
+                    settings: {
+                        modules: [],
+                        loggingChannel: ""
+                    }
+                },
+                antiRaid: {
+                    enabled: false,
+                    settings: {
+                        joinThreshold: 0,
+                        joinTimeThreshold: 0,
+                        sensitivity: "LOW",
+                        loggingChannel: ""
+                    }
+                },
+                inviteTracker: {
+                    enabled: false,
+                    settings: {
+                        trackingChannel: ""
+                    }
+                },
+                verification: {
+                    enabled: false,
+                    settings: {
+                        description: "",
+                        verifiedRole: "",
+                        verificationLoggingChannel: "",
+                        verificationGate: "",
+                        unverifiedRole: "",
+                        questions: []
+                    }
+                },
+                antiScamFeature: {
+                    enabled: false,
+                    settings: {
+                        loggingChannel: "",
+                        quarantinedRole: ""
+                    }
+                },
+                globalBlacklist: {
+                    enabled: false,
+                    settings: {
+                        loggingChannel: ""
+                    }
+                },
+                localBlacklist: {
+                    enabled: false,
+                    settings: {
+                        loggingChannel: ""
+                    }
+                },
+                ticket: {
+                    enabled: false,
+                    settings: {
+                        autoCloseOnUserLeave: true,
+                        categoryId: "",
+                        closingCategoryId: "",
+                        initialMessage: "",
+                        initialTitle: "",
+                        ticketLoggingChannel: "",
+                        transcript: true
+                    }
+                }
+            }
+        }
+    }
+}

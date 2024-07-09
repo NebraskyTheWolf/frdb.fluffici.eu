@@ -11,6 +11,7 @@ import { GuildSettings, Question } from "@/models/GuildSettings.ts";
 import { FaRegNoteSticky } from "react-icons/fa6";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import Select, { SingleValue, StylesConfig } from 'react-select';
+import {defaultSettings} from "@/lib/constants.ts";
 
 interface VerificationSettingsProps {
     actorId?: string;
@@ -49,7 +50,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
         min: 0,
         max: 0
     });
-    const [settings, setSettings] = useState<GuildSettings | null>(null);
+    const [settings, setSettings] = useState<GuildSettings>(defaultSettings(serverId!));
     const [channels, setChannels] = useState<Channel[]>([]);
     const [roles, setRoles] = useState<Role[]>([]);
     const [enabled, setEnabled] = useState<boolean>(false);
@@ -59,9 +60,9 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({ serverId, a
             try {
                 const response = await axios.post(`/api/servers/${serverId}/settings`);
                 setSettings(response.data);
-                setQuestions(response.data.config.features.verification.settings.questions);
-                setEnabled(response.data.config.features.verification.enabled);
-                setDescription(response.data.config.features.verification.settings.description)
+                setQuestions(response.data.config.features.verification.settings.questions ?? []);
+                setEnabled(response.data.config.features.verification.enabled ?? false);
+                setDescription(response.data.config.features.verification.settings.description ?? "")
             } catch (error) {
                 showToast("Unable to fetch server settings", "error");
             } finally {

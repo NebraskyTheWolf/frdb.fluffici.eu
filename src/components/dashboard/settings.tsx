@@ -5,6 +5,7 @@ import { FaQuestionCircle } from 'react-icons/fa';
 import axios from 'axios';
 import { showToast } from '@/components/toast.tsx';
 import { GuildSettings } from '@/models/GuildSettings.ts';
+import {defaultSettings} from "@/lib/constants.ts";
 
 interface GeneralSettingsProps {
     actorId?: string;
@@ -31,7 +32,7 @@ interface Command {
 
 const GeneralSettings: React.FC<GeneralSettingsProps> = ({ serverId, actorId }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [settings, setSettings] = useState<GuildSettings | null>(null);
+    const [settings, setSettings] = useState<GuildSettings>(defaultSettings(serverId!));
     const [channels, setChannels] = useState<Channel[]>([]);
     const [roles, setRoles] = useState<Role[]>([]);
     const [commands, setCommands] = useState<Command[]>([]);

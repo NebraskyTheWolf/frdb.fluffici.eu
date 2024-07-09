@@ -12,6 +12,7 @@ import 'react-quill/dist/quill.snow.css';
 import '../../../styles/quill-custom.css';
 import {Button} from "@/components/button.tsx";
 import SelectChannelDialog from "@/components/selectchanneldialog.tsx";
+import {defaultSettings} from "@/lib/constants.ts";
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface TicketSettingsProps {
@@ -27,7 +28,7 @@ interface Channel {
 
 const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, actorId }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [settings, setSettings] = useState<GuildSettings | null>(null);
+    const [settings, setSettings] = useState<GuildSettings>(defaultSettings(serverId!));
     const [channels, setChannels] = useState<Channel[]>([]);
     const [sendForm, setSendForm] = useState<boolean>(false);
     const [selectedChannel, setSelectedChannel] = useState<Channel>();

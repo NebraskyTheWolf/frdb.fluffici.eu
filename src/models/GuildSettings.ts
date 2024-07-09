@@ -20,7 +20,7 @@ export interface PatchNotesAnnouncement {
     channel: string;
 }
 
-export interface TicketSettings extends Settings {
+export interface TicketSettings {
     categoryId: string;
     closingCategoryId: string;
     initialTitle: string;
@@ -30,7 +30,7 @@ export interface TicketSettings extends Settings {
     autoCloseOnUserLeave: boolean;
 }
 
-export interface VerificationSettings extends Settings {
+export interface VerificationSettings {
     verificationGate: string;
     verificationLoggingChannel: string;
     verifiedRole: string;
@@ -39,32 +39,32 @@ export interface VerificationSettings extends Settings {
     questions: Question[];
 }
 
-export interface AntiRaidSettings extends Settings {
+export interface AntiRaidSettings {
     loggingChannel: string;
     sensitivity: string;
     joinThreshold: number;
     joinTimeThreshold: number;
 }
 
-export interface InviteTrackerSettings extends Settings {
+export interface InviteTrackerSettings {
     trackingChannel: string;
 }
 
-export interface BlacklistSettings extends Settings {
+export interface BlacklistSettings {
     loggingChannel: string;
 }
 
-export interface WelcomingSettings extends Settings {
+export interface WelcomingSettings {
     welcomeChannel: string;
     goodbyeChannel: string;
 }
 
-export interface AutoModerationSettings extends Settings {
+export interface AutoModerationSettings {
     loggingChannel: string;
     modules: Module[];
 }
 
-export interface AntiScamSettings extends Settings {
+export interface AntiScamSettings {
     loggingChannel: string;
     quarantinedRole: string;
 }

@@ -6,6 +6,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import Select from "react-select";
 import { Switch } from "@headlessui/react";
 import { customSelectStyles } from "@/lib/utils.ts";
+import {defaultSettings} from "@/lib/constants.ts";
 
 interface AntiScamProps {
     actorId: string;
@@ -27,7 +28,7 @@ interface Role {
 
 const AntiScam: React.FC<AntiScamProps> = ({ actorId, serverId }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [settings, setSettings] = useState<GuildSettings | null>(null);
+    const [settings, setSettings] = useState<GuildSettings>(defaultSettings(serverId!));
     const [channels, setChannels] = useState<Channel[]>([]);
     const [roles, setRoles] = useState<Role[]>([]);
 
