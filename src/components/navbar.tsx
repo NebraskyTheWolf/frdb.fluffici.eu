@@ -7,8 +7,6 @@ import {
     FaClipboardList,
     FaHome,
     FaUserCircle,
-    FaCog,
-    FaCreditCard,
     FaTachometerAlt,
     FaSignOutAlt,
     FaLock,
