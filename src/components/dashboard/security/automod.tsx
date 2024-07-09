@@ -63,6 +63,13 @@ const AutoModeration: React.FC<AutoModerationProps> = ({ actorId, serverId }) =>
             try {
                 const response = await axios.post(`/api/servers/${serverId}/settings`);
                 setSettings(response.data);
+
+                const autoModerationModules = response.data.config.features.autoModeration.settings.modules;
+                const syncedModules = defaultModules.map(defaultModule => {
+                    const fetchedModule = autoModerationModules.find((mod: Module) => mod.slug === defaultModule.slug);
+                    return fetchedModule ? { ...defaultModule, ...fetchedModule } : defaultModule;
+                });
+                setModules(syncedModules);
             } catch (error) {
                 showToast('Unable to fetch server settings', 'error');
             } finally {
