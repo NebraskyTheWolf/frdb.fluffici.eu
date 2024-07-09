@@ -45,12 +45,8 @@ const defaultModules: Module[] = [
     { enabled: false, slug: 'mass_mentions', name: 'Mass Mentions', sensitivity: 'LOW', description: 'Detect and prevent mass mentions to avoid spamming.' },
     { enabled: false, slug: 'spam', name: 'Spam', sensitivity: 'MEDIUM', description: 'Detect and prevent spam messages in the server.' },
     { enabled: false, slug: 'repeated_messages', name: 'Repeated Messages', sensitivity: 'HIGH', description: 'Detect and prevent repeated messages.' },
-    { enabled: false, slug: 'media_content_spam', name: 'Media Content Spam', sensitivity: 'LOW', description: 'Detect and prevent media content spam.' },
     { enabled: false, slug: 'link_protection', name: 'Link Protection', sensitivity: 'HIGH', description: 'Detect and prevent spammy or harmful links.' },
-    { enabled: false, slug: 'profanity_filter', name: 'Profanity Filter', sensitivity: 'MEDIUM', description: 'Filter and block messages containing profane language.' },
-    { enabled: false, slug: 'anti_raid', name: 'Anti-Raid', sensitivity: 'HIGH', description: 'Detect and prevent raid attempts.' },
     { enabled: false, slug: 'emoji_spam', name: 'Emoji Spam', sensitivity: 'LOW', description: 'Detect and prevent excessive use of emojis.' },
-    { enabled: false, slug: 'flood_protection', name: 'Flood Protection', sensitivity: 'MEDIUM', description: 'Detect and prevent message flooding.' },
     { enabled: false, slug: 'attachment_spam', name: 'Attachment Spam', sensitivity: 'MEDIUM', description: 'Detect and prevent spammy attachments.' },
 ]
 

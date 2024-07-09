@@ -33,23 +33,7 @@ import AntiRaid from "@/components/dashboard/security/antiraid.tsx";
 import AutoModeration from "@/components/dashboard/security/automod.tsx";
 import Changelog from "./changelog";
 import InviteTracker from "@/components/dashboard/security/invitetracker.tsx";
-
-export async function getServerSideProps(context: { req: GetSessionParams | undefined; }) {
-    const session = await getSession(context.req)
-
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    }
-
-    return {
-        props: {},
-    };
-}
+import {useRouter} from "next/navigation";
 
 interface Server {
     id: string;
@@ -84,6 +68,14 @@ const DashboardPage: React.FC = () => {
     const [planExpiration, setPlanExpiration] = useState(0);
     const [activeSection, setActiveSection] = useState<string>("");
     const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/");
+        }
+    }, [status, router]);
 
     useEffect(() => {
         const fetchServers = async () => {

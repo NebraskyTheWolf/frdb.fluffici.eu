@@ -25,6 +25,7 @@ import {
 } from "@/components/dialog";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
     { href: "/", icon: FaHome, label: "Home" },
@@ -39,15 +40,7 @@ const NAV_ITEMS = [
                 "By inviting FurRaidDB, you agree to our Terms of Service and Privacy Policy.",
             link: "https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot",
         },
-    },
-];
-
-const ACCOUNT_ITEMS = [
-    { href: "/dashboard", icon: FaTachometerAlt, label: "Dashboard" },
-    { href: "/account/settings", icon: FaCog, label: "Settings", hidden: true },
-    { href: "/account/billing", icon: FaCreditCard, label: "Billing", hidden: true },
-    { href: "/blacklist", icon: FaLock, label: "Global Blacklist", conditional: "isStaff" },
-    { action: "logout", icon: FaSignOutAlt, label: "Log Out" },
+    }
 ];
 
 const Navbar = () => {
@@ -55,6 +48,7 @@ const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const { data: session, status } = useSession();
     const dropdownRef = useRef<HTMLUListElement>(null);
+    const router = useRouter();
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -93,6 +87,11 @@ const Navbar = () => {
         };
         fetchStaff();
     }, [session]);
+
+    const handleLinkClick = (href: string) => {
+        closeDropdown();
+        router.push(href);
+    };
 
     return (
         <nav className="bg-gray-900 text-white py-4 relative z-10 shadow-md">
@@ -142,63 +141,41 @@ const Navbar = () => {
                         )
                     )}
                     {status === "authenticated" && (
-                        <li className="relative">
-                            <button
-                                onClick={toggleDropdown}
-                                className="flex items-center space-x-2 focus:outline-none"
-                            >
-                                {session?.user.image ? (
-                                    <img
-                                        src={session.user.image}
-                                        alt={session.user.name}
-                                        className="w-8 h-8 rounded-full"
-                                    />
-                                ) : (
-                                    <FaUserCircle size={30} />
-                                )}
-                                <span>{session.user.name}</span>
-                            </button>
-                            {dropdownOpen && (
-                                <ul
-                                    ref={dropdownRef}
-                                    className="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 z-50"
-                                >
-                                    {ACCOUNT_ITEMS.map(
-                                        (item, index) =>
-                                            !item.hidden &&
-                                            (!item.conditional || (item.conditional && isStaff)) && (
-                                                <li key={index} className="w-full border-b border-gray-700">
-                                                    {item.action ? (
-                                                        <button
-                                                            onClick={() => {
-                                                                signOut({
-                                                                    callbackUrl: window.location.href,
-                                                                    redirect: false,
-                                                                });
-                                                                closeDropdown();
-                                                            }}
-                                                            className="flex items-center w-full text-left px-4 py-2 hover:bg-gray-700"
-                                                        >
-                                                            <item.icon className={"mr-2"} />
-                                                            {item.label}
-                                                        </button>
-                                                    ) : (
-                                                        <Link href={item.href ?? "#"}>
-                                                            <a
-                                                                className="flex items-center w-full px-4 py-2 hover:bg-gray-700"
-                                                                onClick={closeDropdown}
-                                                            >
-                                                                <item.icon className="mr-2" />
-                                                                {item.label}
-                                                            </a>
-                                                        </Link>
-                                                    )}
-                                                </li>
-                                            )
-                                    )}
-                                </ul>
+                        <>
+                            <li>
+                                <Link href="/dashboard">
+                                    <Button variant="premium">
+                                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                                            Dashboard
+                                        </motion.div>
+                                    </Button>
+                                </Link>
+                            </li>
+                            {isStaff && (
+                                <li>
+                                    <Link href="/blacklist">
+                                        <Button variant="outline">
+                                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                                                Global blacklist
+                                            </motion.div>
+                                        </Button>
+                                    </Link>
+                                </li>
                             )}
-                        </li>
+                            <li>
+                                <Button
+                                    onClick={() => signOut({
+                                        callbackUrl: window.location.href,
+                                        redirect: false,
+                                    })}
+                                    variant="destructive"
+                                >
+                                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                                        Log out
+                                    </motion.div>
+                                </Button>
+                            </li>
+                        </>
                     )}
                     {status !== "authenticated" && (
                         <li>
@@ -217,7 +194,8 @@ const Navbar = () => {
                     )}
                 </ul>
             </div>
-            <div className="md:hidden flex justify-around items-center bg-gray-900 text-white fixed bottom-0 w-full py-4 border-t border-gray-700">
+            <div
+                className="md:hidden flex justify-around items-center bg-gray-900 text-white fixed bottom-0 w-full py-4 border-t border-gray-700">
                 {NAV_ITEMS.map((item, index) =>
                     item.dialog ? (
                         <Dialog key={index}>
@@ -268,39 +246,45 @@ const Navbar = () => {
                                 ref={dropdownRef}
                                 className="absolute bottom-14 right-0 mb-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 z-50"
                             >
-                                {ACCOUNT_ITEMS.map(
-                                    (item, index) =>
-                                        !item.hidden &&
-                                        (!item.conditional || (item.conditional && isStaff)) && (
-                                            <li key={index} className="w-full border-b border-gray-700">
-                                                {item.action ? (
-                                                    <button
-                                                        onClick={() => {
-                                                            signOut({
-                                                                callbackUrl: window.location.href,
-                                                                redirect: false,
-                                                            });
-                                                            closeDropdown();
-                                                        }}
-                                                        className="flex items-center w-full text-left px-4 py-2 hover:bg-gray-700"
-                                                    >
-                                                        <item.icon className="mr-2" />
-                                                        {item.label}
-                                                    </button>
-                                                ) : (
-                                                    <Link href={item.href ?? "#"}>
-                                                        <a
-                                                            className="flex items-center w-full px-4 py-2 hover:bg-gray-700"
-                                                            onClick={closeDropdown}
-                                                        >
-                                                            <item.icon className="mr-2" />
-                                                            {item.label}
-                                                        </a>
-                                                    </Link>
-                                                )}
-                                            </li>
-                                        )
+                                <li className="w-full border-b border-gray-700">
+                                    <Link href="/dashboard">
+                                        <a
+                                            className="flex items-center w-full px-4 py-2 hover:bg-gray-700"
+                                            onClick={() => handleLinkClick("/dashboard")}
+                                        >
+                                            <FaTachometerAlt className="mr-2" />
+                                            Dashboard
+                                        </a>
+                                    </Link>
+                                </li>
+                                {isStaff && (
+                                    <li className="w-full border-b border-gray-700">
+                                        <Link href="/blacklist">
+                                            <a
+                                                className="flex items-center w-full px-4 py-2 hover:bg-gray-700"
+                                                onClick={() => handleLinkClick("/blacklist")}
+                                            >
+                                                <FaLock className="mr-2" />
+                                                Global Blacklist
+                                            </a>
+                                        </Link>
+                                    </li>
                                 )}
+                                <li className="w-full border-b border-gray-700">
+                                    <button
+                                        onClick={() => {
+                                            signOut({
+                                                callbackUrl: window.location.href,
+                                                redirect: false,
+                                            });
+                                            closeDropdown();
+                                        }}
+                                        className="flex items-center w-full text-left px-4 py-2 hover:bg-gray-700"
+                                    >
+                                        <FaSignOutAlt className="mr-2" />
+                                        Log Out
+                                    </button>
+                                </li>
                             </ul>
                         )}
                     </button>

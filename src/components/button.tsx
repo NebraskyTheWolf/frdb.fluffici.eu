@@ -22,12 +22,13 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         invite:
           "border border-input bg-accent hover:bg-background hover:text-accent-foreground",
-        login: "bg-pink-500 hover:bg-pink-600",
+        login: "bg-red-500 hover:bg-red-800",
         premium: "btn btn-premium",
         purchase: "btn btn-purchase",
         accept: "bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded flex items-center mr-2",
         deny: "bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex items-center",
-        add: "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        add: "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded",
+        dropdown: "flex items-center w-full px-4 py-2 hover:bg-gray-700"
       },
       size: {
         default: "h-10 px-4 py-2",

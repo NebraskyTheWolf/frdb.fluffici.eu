@@ -138,6 +138,13 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
         });
     };
 
+
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            handleSendMessage();
+        }
+    };
+
     const handleSendMessage = async () => {
         if (!newMessage.trim()) return;
 
@@ -313,6 +320,7 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                                     onChange={(e) => setNewMessage(e.target.value)}
                                     placeholder="Type your message..."
                                     className="w-full p-2 rounded-lg bg-gray-900 text-white ml-2"
+                                    onKeyDown={handleKeyPress}
                                 />
                                 <Button variant="outline" onClick={handleSendMessage} className="bg-green-500 text-white py-2 px-4 rounded ml-2">
                                     <FaPaperPlane />

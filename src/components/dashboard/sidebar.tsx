@@ -152,7 +152,6 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                     <div className="mt-5">
                         {renderButton('Anti Raid', <FaShieldAlt className="mr-2" />, 'Protection-AntiRaid', 'FurRaid Lite+')}
                         {renderButton('Anti Scam', <FaLock className="mr-2" />, 'Protection-AntiScam', 'FurRaid Advanced+')}
-                        {renderButton('Filters', <FaFilter className="mr-2" />, 'Protection-Filters', 'FurRaid Lite+')}
                         {renderButton('Auto Moderation', <FaUserShield className="mr-2" />, 'Protection-AutoModeration', 'FurRaid Advanced+')}
                         {renderButton('Invite Tracker', <FaFileCirclePlus className="mr-2" />, 'Protection-InviteTracker', 'FurRaid Advanced+')}
                     </div>
