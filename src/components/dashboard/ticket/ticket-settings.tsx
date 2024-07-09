@@ -10,6 +10,8 @@ import { GuildSettings } from '@/models/GuildSettings.ts';
 import dynamic from "next/dynamic";
 import 'react-quill/dist/quill.snow.css';
 import '../../../styles/quill-custom.css';
+import {Button} from "@/components/button.tsx";
+import SelectChannelDialog from "@/components/selectchanneldialog.tsx";
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface TicketSettingsProps {
@@ -27,6 +29,8 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
     const [isLoading, setIsLoading] = useState(true);
     const [settings, setSettings] = useState<GuildSettings | null>(null);
     const [channels, setChannels] = useState<Channel[]>([]);
+    const [sendForm, setSendForm] = useState<boolean>(false);
+    const [selectedChannel, setSelectedChannel] = useState<Channel>();
     const [categories, setCategories] = useState<Channel[]>([]);
 
     useEffect(() => {
@@ -234,6 +238,20 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
         }),
     };
 
+    const handleSendForm = async (channel: Channel) => {
+        try {
+            await axios.post(`/api/servers/${serverId}/summon-interaction`, {
+                type: 'TICKET_FORM',
+                channelId: channel.id
+            });
+            showToast("The ticket form has been sent to your server", "success")
+        } catch (error) {
+            showToast("A error occurred while sending the verification form", "error")
+        }
+    }
+
+    const handleOpenSendForm = () => setSendForm(true)
+
     return (
         <div className="flex flex-col p-6 space-y-6 bg-gray-800 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-white">Ticket Settings</h2>
@@ -249,8 +267,21 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                             className={`${settings?.config.features.ticket.enabled ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
                         >
                             <span className="sr-only">Enable Ticket Module</span>
-                            <span className={`${settings?.config.features.ticket.enabled ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`} />
+                            <span
+                                className={`${settings?.config.features.ticket.enabled ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform bg-white rounded-full transition`}/>
                         </Switch>
+                    </div>
+                    <div
+                        className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
+                        <span
+                            className="text-white">Send ticket form {renderHelpIcon('This button will send the ticket form to allow user to open new tickets')}</span>
+                        <Button
+                            onClick={handleOpenSendForm}
+                            variant={settings?.config.features.ticket.enabled ? "premium" : "destructive"}
+                            disabled={!settings?.config.features.ticket.enabled}
+                        >
+                            {settings?.config.features.ticket.enabled ? "Send form" : 'Please enable the ticket system.'}
+                        </Button>
                     </div>
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
@@ -354,6 +385,13 @@ const TicketSettingsComponent: React.FC<TicketSettingsProps> = ({ serverId, acto
                         </div>
                     </div>
                 </>
+            )}
+            {sendForm && (
+                <SelectChannelDialog
+                    serverId={serverId!}
+                    onClick={handleSendForm}
+                    channelType={'TEXT'}
+                />
             )}
         </div>
     );

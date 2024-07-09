@@ -85,38 +85,38 @@ const ModerationDialog: React.FC<ModerationDialogProps> = ({ actorId, serverId, 
                     <Tab.Panels className="mt-2">
                         <Tab.Panel className="p-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <div className="flex items-center p-4 bg-white rounded shadow">
+                                <div className="flex items-center p-4 bg-gray-900 rounded shadow">
                                     <FaBan className="mr-2 text-red-500"/>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Bans</h3>
+                                        <h3 className="text-lg font-semibold text-black">Bans</h3>
                                         <p className="text-gray-700">{moderationData?.bans}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center p-4 bg-white rounded shadow">
                                     <FaExclamationTriangle className="mr-2 text-yellow-500"/>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Warns</h3>
+                                        <h3 className="text-lg font-semibold text-black">Warns</h3>
                                         <p className="text-gray-700">{moderationData?.warns}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center p-4 bg-white rounded shadow">
                                     <FaMicrophoneSlash className="mr-2 text-blue-500"/>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Mutes</h3>
+                                        <h3 className="text-lg font-semibold text-black">Mutes</h3>
                                         <p className="text-gray-700">{moderationData?.mutes}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center p-4 bg-white rounded shadow">
                                     <FaRunning className="mr-2 text-green-500"/>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Kicks</h3>
+                                        <h3 className="text-lg font-semibold text-black">Kicks</h3>
                                         <p className="text-gray-700">{moderationData?.kicks}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center p-4 bg-white rounded shadow">
                                     <FaStickyNote className="mr-2 text-gray-500"/>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Note</h3>
+                                        <h3 className="text-lg font-semibold text-black">Note</h3>
                                         <p className="text-gray-700">{moderationData?.note}</p>
                                     </div>
                                 </div>

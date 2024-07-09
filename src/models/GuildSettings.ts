@@ -112,6 +112,10 @@ export interface Module {
     enabled: boolean;
     slug: string;
     sensitivity: string;
+    customSettings?: {
+        threshold?: number;
+        timeThreshold?: number;
+    };
 }
 
 export interface Features {

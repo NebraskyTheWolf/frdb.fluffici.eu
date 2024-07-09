@@ -19,13 +19,6 @@ interface Channel {
     type: string;
 }
 
-interface Role {
-    id: string;
-    name: string;
-    color: string;
-    position: number;
-}
-
 const SENSITIVITY = [
     { label: 'Low', value: 'LOW', icon: <FaShield /> },
     { label: 'Medium', value: 'MEDIUM', icon: <FaShieldAlt /> },
@@ -155,7 +148,7 @@ const AntiRaid: React.FC<AntiRaidProps> = ({ actorId, serverId}) => {
                     <div
                         className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
                         <span className="text-white">
-                            Enabled {renderHelpIcon('Enable or disable verification feature')}
+                            Enabled {renderHelpIcon('Enable or disable anti-raid feature')}
                         </span>
                         <Switch
                             checked={settings?.config.features.antiRaid.enabled}

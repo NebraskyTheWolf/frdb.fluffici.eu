@@ -146,7 +146,7 @@ const InviteTracker: React.FC<InviteTrackerProps> = ({ actorId, serverId }) => {
                 <div className="space-y-4">
                     <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 space-x-0 md:space-x-4">
                         <span className="text-white">
-                            Enabled {renderHelpIcon('Enable or disable verification feature')}
+                            Enabled {renderHelpIcon('Enable or disable invite-tracker feature')}
                         </span>
                         <Switch
                             checked={settings?.config.features.inviteTracker.enabled}

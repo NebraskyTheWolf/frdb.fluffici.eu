@@ -82,6 +82,7 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [showTranscript, setShowTranscript] = useState<boolean>(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const messageContainerRef = useRef<HTMLDivElement>(null);
 
     const { show: showUserContextMenu } = useContextMenu({ id: MENU_ID_USER });
     const { show: showChatContextMenu } = useContextMenu({ id: MENU_ID_CHAT });
@@ -131,7 +132,10 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
     }, [selectedTicket]);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messageContainerRef.current?.scrollTo({
+            top: messageContainerRef.current.scrollHeight,
+            behavior: "smooth"
+        });
     };
 
     const handleSendMessage = async () => {
@@ -153,7 +157,6 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                 content: newMessage
             });
 
-            setMessages((prevMessages) => [...prevMessages, message].sort((a: Message, b: Message) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()));
             setNewMessage("");
             scrollToBottom();
         } catch (err) {
@@ -288,7 +291,7 @@ const SupportTicketsView: React.FC<SupportTicketsProps> = ({ serverId }) => {
                         </div>
                     ) : (
                         <>
-                            <div className="bg-gray-800 p-4 rounded-lg shadow-md mb-4 h-96 overflow-y-scroll">
+                            <div ref={messageContainerRef} className="bg-gray-800 p-4 rounded-lg shadow-md mb-4 h-96 overflow-y-scroll">
                                 {messages.map((message) => (
                                     <div key={message.messageId} className="mb-4">
                                         <div className="flex items-center mb-2">
