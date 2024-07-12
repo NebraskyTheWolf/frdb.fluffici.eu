@@ -33,6 +33,7 @@ import AutoModeration from "@/components/dashboard/security/automod.tsx";
 import Changelog from "./changelog";
 import InviteTracker from "@/components/dashboard/security/invitetracker.tsx";
 import {useRouter} from "next/navigation";
+import Welcoming from "@/components/dashboard/security/welcoming.tsx";
 
 interface Server {
     id: string;
@@ -162,6 +163,8 @@ const DashboardPage: React.FC = () => {
                 return <AutoModeration serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Protection-InviteTracker':
                 return <InviteTracker serverId={selectedServer?.id!} actorId={session?.user.id!} />;
+            case 'Protection-Welcoming':
+                return <Welcoming serverId={selectedServer?.id!} actorId={session?.user.id!} />;
             case 'Verification-Verifications':
                 return <VerificationScreen serverId={selectedServer?.id} />;
             case 'Verification-Configuration':

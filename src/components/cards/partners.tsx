@@ -39,7 +39,7 @@ const Partners: React.FC = () => {
         <div className="container mx-auto">
           <div className="flex flex-col items-center">
             <h2 className="text-2xl font-bold mb-6">
-              Mnoho populárních serverů používá{" "}
+              Many popular servers use{" "}
               <span className="text-red-600">FurRaidDB</span>
             </h2>
             <div className="flex flex-wrap justify-center gap-4">
@@ -53,7 +53,7 @@ const Partners: React.FC = () => {
                       <Tippy
                           key={server.id}
                           content={
-                            <div className="flex items-center p-2 bg-gray-800 text-white rounded-lg shadow-md">
+                            <div className="flex items-center p-2 text-white rounded-lg shadow-md">
                               <img
                                   src={getServerIconUrlValid(server.icon)}
                                   alt={server.name}

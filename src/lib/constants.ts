@@ -59,7 +59,9 @@ export const defaultSettings = (id: string): GuildSettings => {
                     enabled: false,
                     settings: {
                         welcomeChannel: "",
-                        goodbyeChannel: ""
+                        goodbyeChannel: "",
+                        joinMessage: "",
+                        leftMessage: ""
                     }
                 },
                 autoModeration: {

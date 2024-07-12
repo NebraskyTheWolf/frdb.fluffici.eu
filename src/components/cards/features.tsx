@@ -15,12 +15,6 @@ const Features: React.FC = () => {
 
   const features = [
     {
-      icon: <FaShieldAlt />,
-      title: "Anti-Raid",
-      shortDescription: "Protect your server from malicious attacks and spam.",
-      fullDescription: "Protect your server from malicious attacks and spam raids with advanced automated defenses. Our system quickly identifies and neutralizes potential threats, ensuring a safe and secure environment for your community."
-    },
-    {
       icon: <FaBan />,
       title: "Blacklist",
       shortDescription: "Comprehensive database of unwanted users.",

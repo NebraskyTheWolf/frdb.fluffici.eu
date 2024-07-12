@@ -1,5 +1,24 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaStar, FaChartBar, FaUsers, FaShieldAlt, FaTicketAlt, FaCogs, FaClipboardList, FaUser, FaBan, FaCheck, FaLock, FaFilter, FaUserShield, FaCog, FaLifeRing } from 'react-icons/fa';
+import {
+    FaChevronDown,
+    FaChevronUp,
+    FaStar,
+    FaChartBar,
+    FaUsers,
+    FaShieldAlt,
+    FaTicketAlt,
+    FaCogs,
+    FaClipboardList,
+    FaUser,
+    FaBan,
+    FaCheck,
+    FaLock,
+    FaFilter,
+    FaUserShield,
+    FaCog,
+    FaLifeRing,
+    FaConciergeBell
+} from 'react-icons/fa';
 import { Guild } from "@/models/Guild.ts";
 import { Button } from "@/components/button.tsx";
 import { getServerIconUrl } from "@/lib/utils.ts";
@@ -153,6 +172,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                         {renderButton('Anti Scam', <FaLock className="mr-2" />, 'Protection-AntiScam', 'FurRaid Advanced+')}
                         {renderButton('Auto Moderation', <FaUserShield className="mr-2" />, 'Protection-AutoModeration', 'FurRaid Advanced+')}
                         {renderButton('Invite Tracker', <FaFileCirclePlus className="mr-2" />, 'Protection-InviteTracker', 'FurRaid Advanced+')}
+                        {renderButton('Welcoming', <FaConciergeBell className="mr-2" />, 'Protection-Welcoming', 'FurRaid Advanced+')}
                     </div>
                 )}
             </div>

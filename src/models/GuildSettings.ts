@@ -57,6 +57,8 @@ export interface BlacklistSettings {
 export interface WelcomingSettings {
     welcomeChannel: string;
     goodbyeChannel: string;
+    joinMessage: string;
+    leftMessage: string;
 }
 
 export interface AutoModerationSettings {
