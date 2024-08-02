@@ -45,6 +45,7 @@ export async function getServerSideProps(context: { req: GetSessionParams | unde
     };
 }
 
+
 const BlacklistPage = () => {
     const [userId, setUserId] = useState("");
     const [blacklistData, setBlacklistData] = useState<Blacklist | null>(null);
@@ -72,7 +73,7 @@ const BlacklistPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen text-white flex flex-col items-center justify-center p-6">
             <h1 className="text-4xl font-bold mb-8">Global Blacklist Database</h1>
             <div className="w-full max-w-md">
                 <div className="flex items-center bg-gray-800 rounded-lg mb-4">
@@ -95,29 +96,28 @@ const BlacklistPage = () => {
                     <p>Loading Changelogs...</p>
                 </div>
             ) : (
-                <>
-                    {blacklistData && (
-                        <div className="w-full max-w-2xl mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
-                            <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-2xl font-bold">Blacklist Details</h2>
-                            </div>
-                            <div className="mb-4">
-                                <p className="mb-2 flex items-center"><FaUser className="mr-2" /><strong>Username:</strong> {blacklistData.user!.id}</p>
-                                <p className="mb-2 flex items-center"><FaUser className="mr-2" /><strong>Issued by:</strong> {blacklistData.author!.id}</p>
-                                <p className="mb-2 flex items-center"><FaExclamationTriangle className="mr-2" /><strong>Reason:</strong> {blacklistData.reason}</p>
-                                <p className="mb-2 flex items-center"><FaCalendarAlt className="mr-2" /><strong>Created at:</strong> {blacklistData.createdAt}</p>
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-bold mb-2">Attachment</h3>
-                                {blacklistData.attachmentUrl ? (
-                                    <img src={blacklistData.attachmentUrl} alt="Attachment" className="w-full rounded-lg shadow-md" />
-                                ) : (
-                                    <p>No attachment available</p>
-                                )}
-                            </div>
+                !error && blacklistData && (
+                    <div className="w-full max-w-2xl mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-2xl font-bold">Blacklist Details</h2>
                         </div>
-                    )}
-                </>
+                        <div className="mb-4">
+                            <p className="mb-2 flex items-center"><FaUser className="mr-2" /><strong>Username:</strong> {blacklistData.user!.id}</p>
+                            <p className="mb-2 flex items-center"><FaUser className="mr-2" /><strong>Issued by:</strong> {blacklistData.author!.id}</p>
+                            <p className="mb-2 flex items-center"><FaExclamationTriangle className="mr-2" /><strong>Reason:</strong> {blacklistData.reason}</p>
+                            <p className="mb-2 flex items-center"><FaCalendarAlt className="mr-2" /><strong>Created at:</strong> {blacklistData.createdAt}</p>
+                        </div>
+                        <div>
+                            {blacklistData.attachmentUrl && (
+                                <>
+                                    <h3 className="text-lg font-bold mb-2">Attachment</h3>
+                                    <img src={blacklistData.attachmentUrl} alt="Attachment"
+                                         className="w-full rounded-lg shadow-md"/>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                )
             )}
         </div>
     );

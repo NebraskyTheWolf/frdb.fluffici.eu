@@ -149,7 +149,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                                 variant="outline"
                                 className="w-full text-left flex justify-between items-center"
                                 onClick={() => toggleSection('Protection')}
-                                disabled={!isPremium || ((server.permissions & PERMISSIONS.ADMINISTRATOR) !== PERMISSIONS.ADMINISTRATOR || isBlacklisted)}
+                                disabled={!isPremium || ((server.permissions & PERMISSIONS.BAN_MEMBERS) !== PERMISSIONS.BAN_MEMBERS || isBlacklisted)}
                             >
                                 <FaShieldAlt className="mr-2" /> Security
                                 <span className="ml-auto">

@@ -85,7 +85,7 @@ const ModerationDialog: React.FC<ModerationDialogProps> = ({ actorId, serverId, 
                     <Tab.Panels className="mt-2">
                         <Tab.Panel className="p-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <div className="flex items-center p-4 bg-gray-900 rounded shadow">
+                                <div className="flex items-center p-4 bg-white rounded shadow">
                                     <FaBan className="mr-2 text-red-500"/>
                                     <div>
                                         <h3 className="text-lg font-semibold text-black">Bans</h3>
