@@ -44,12 +44,12 @@ const Footer: React.FC = () => {
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
                     <a href="https://fluffici.eu/tos" className="hover:underline">
-                      Podmínky použití
+                      Terms of Service
                     </a>
                   </li>
                   <li className="mb-4">
                     <a href="https://fluffici.eu/privacy-policy" className="hover:underline">
-                      Zásady ochrany osobních údajů
+                      Privacy & Policy
                     </a>
                   </li>
                 </ul>
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
             <a href="https://fluffici.eu" className="hover:underline">
               Fluffici, z.s.
             </a>
-              Všechna práva vyhrazena.
+            {" "} All right Reserved {"  "} Made by <a href="https://nebraskythewolf.work/en" className="hover:underline">Vakea</a> with 🦊❤️
           </span>
             <div className="flex mt-4 sm:justify-center sm:mt-0">
               <a href="https://discord.gg/fluffici">
