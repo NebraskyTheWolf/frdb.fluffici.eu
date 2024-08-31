@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Premium() {
     return (
-        <div hidden={true}>
+        <div>
             <Hero/>
             <Servers/>
             <PremiumPlans/>

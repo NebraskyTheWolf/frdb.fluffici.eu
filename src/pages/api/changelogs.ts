@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {Plan} from "@/models/Plan.ts";
+
+import Redis from 'ioredis';
+const redis = new Redis(process.env.REDIS_URL!);
 
 type ErrorResponse = {
     error: string;
@@ -27,7 +29,16 @@ export default async function handler(
             }
         });
         const data = await response.json();
-        res.status(200).json(data);
+        if (await redis.exists('changelogs')) {
+            var cachedData: any = await redis.get('changelogs');
+            
+            res.status(200).json(JSON.parse(cachedData));
+        } else {
+            await redis.set('changelogs', JSON.stringify(data))
+            await redis.expire('changelogs', 3600)
+
+            res.status(200).json(data);
+        }
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch data' });
     }

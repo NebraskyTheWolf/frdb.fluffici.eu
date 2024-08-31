@@ -20,10 +20,10 @@ const PremiumPlans: React.FC = () => {
                 const response = await fetch('/api/get-all-offers');
                 const data = await response.json();
                 setPlans(data);
-                //setIsLoading(false);
+               setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching offers:', error);
-                //setIsLoading(false);
+                setIsLoading(false);
             }
         };
 

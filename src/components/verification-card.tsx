@@ -61,6 +61,7 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
         switch (status.toLowerCase()) {
             case 'pending':
                 return 'bg-yellow-500 text-white';
+            case 'verified':
             case 'accepted':
                 return 'bg-green-500 text-white';
             case 'denied':
@@ -109,7 +110,7 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row justify-end mt-4 md:mt-6 space-y-2 md:space-y-0 md:space-x-4">
-                        {verification.status.toLowerCase() === 'accepted' || verification.status.toLowerCase() === 'denied' ? (
+                        {verification.status.toLowerCase() === 'accepted' || verification.status.toLowerCase() === 'verified' || verification.status.toLowerCase() === 'denied' ? (
                             <div className="flex items-center space-x-2">
                                 <img src={getServerIconUrlValid(verification.verifiedBy.avatarUrl)}
                                      alt={`${verification.verifiedBy.username}'s avatar`}

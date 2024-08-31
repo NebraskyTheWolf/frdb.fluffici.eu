@@ -4,6 +4,9 @@ type ErrorResponse = {
     error: string;
 };
 
+import Redis from 'ioredis';
+const redis = new Redis(process.env.REDIS_URL!);
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<ErrorResponse>
@@ -15,7 +18,17 @@ export default async function handler(
             }
         });
         const data = await response.json();
-        res.status(200).json(data);
+
+        if (await redis.exists('statistics')) {
+            var cachedData: any = await redis.get('statistics');
+            
+            res.status(200).json(JSON.parse(cachedData));
+        } else {
+            await redis.set('statistics', JSON.stringify(data))
+            await redis.expire('statistics', 3600)
+
+            res.status(200).json(data);
+        }
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch data' });
     }

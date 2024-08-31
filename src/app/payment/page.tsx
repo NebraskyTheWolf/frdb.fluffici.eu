@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Payment() {
     return (
-        <div hidden={true}>
+        <div>
             <PaymentPage/>
         </div>
     );
