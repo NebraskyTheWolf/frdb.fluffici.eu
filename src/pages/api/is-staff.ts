@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
+import { ENDPOINT } from '@/lib/constants';
 
 type ErrorResponse = {
     error: string;
@@ -15,7 +16,7 @@ export default async function handler(
         return res.status(401).json({ error: 'Unauthorized' });
 
     try {
-        const response = await fetch(`https://furraidapi.fluffici.eu/is-staff/${session.user.id}`, {
+        const response = await fetch(`${ENDPOINT}/is-staff/${session.user.id}`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`
             }

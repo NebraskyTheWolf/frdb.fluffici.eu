@@ -3,6 +3,7 @@ import getRawBody from 'raw-body';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
 import axios from "axios";
+import { ENDPOINT } from '@/lib/constants';
 
 type ErrorResponse = {
     error: string;
@@ -37,7 +38,7 @@ export default async function handler(
             return res.status(400).json({ error: 'Bad Request', data: parsedBody });
         }
 
-        const response = await axios.post(`https://furraidapi.fluffici.eu/servers/${id}/ticket-messages`, {
+        const response = await axios.post(`${ENDPOINT}/servers/${id}/ticket-messages`, {
             actorId: session.user.id,
             data: {
                 ticketId

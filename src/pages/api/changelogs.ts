@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import Redis from 'ioredis';
+import { ENDPOINT } from '@/lib/constants';
 const redis = new Redis(process.env.REDIS_URL!);
 
 type ErrorResponse = {
@@ -23,7 +24,7 @@ export default async function handler(
     res: NextApiResponse<Changelog | ErrorResponse>
 ) {
     try {
-        const response = await fetch(`https://furraidapi.fluffici.eu/changelogs`, {
+        const response = await fetch(`${ENDPOINT}/changelogs`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`
             }

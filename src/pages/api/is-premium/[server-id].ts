@@ -1,3 +1,4 @@
+import { ENDPOINT } from '@/lib/constants';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ErrorResponse = {
@@ -11,7 +12,7 @@ export default async function handler(
     const serverId = req.query['server-id'];
 
     try {
-        const response = await fetch(`https://furraidapi.fluffici.eu/is-premium/${serverId}`, {
+        const response = await fetch(`${ENDPOINT}/is-premium/${serverId}`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`
             }

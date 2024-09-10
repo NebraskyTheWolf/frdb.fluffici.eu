@@ -5,6 +5,7 @@ type ErrorResponse = {
 };
 
 import Redis from 'ioredis';
+import { ENDPOINT } from '@/lib/constants';
 const redis = new Redis(process.env.REDIS_URL!);
 
 export default async function handler(
@@ -12,7 +13,7 @@ export default async function handler(
     res: NextApiResponse<ErrorResponse>
 ) {
     try {
-        const response = await fetch(`https://furraidapi.fluffici.eu/statistics`, {
+        const response = await fetch(`${ENDPOINT}/statistics`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`
             }

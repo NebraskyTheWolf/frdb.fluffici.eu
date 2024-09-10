@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {Plan} from "@/models/Plan.ts";
+import { ENDPOINT } from '@/lib/constants';
 
 type ErrorResponse = {
     error: string;
@@ -10,7 +11,7 @@ export default async function handler(
     res: NextApiResponse<Plan[] | ErrorResponse>
 ) {
     try {
-        const response = await fetch(`https://furraidapi.fluffici.eu/offers`, {
+        const response = await fetch(`${ENDPOINT}/offers`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`
             }

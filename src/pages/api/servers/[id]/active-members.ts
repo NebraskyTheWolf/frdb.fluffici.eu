@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from "axios";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
+import { ENDPOINT } from '@/lib/constants';
 
 type ErrorResponse = {
     error: string;
@@ -15,7 +16,7 @@ export default async function handler(
     const session = await getServerSession(req, res, authOptions)
 
     try {
-        const response = await axios.post(`https://furraidapi.fluffici.eu/servers/${serverId}/active-members`, {
+        const response = await axios.post(`${ENDPOINT}/servers/${serverId}/active-members`, {
             actorId: session?.user.id
         },{
             headers: {

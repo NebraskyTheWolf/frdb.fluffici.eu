@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
+import { ENDPOINT } from '@/lib/constants';
 
 interface Data {
     status: boolean;
@@ -26,7 +27,7 @@ export default async function handler(
         return res.status(401).json({ error: 'Unauthorized' });
 
     try {
-        const response = await fetch(`https://furraidapi.fluffici.eu/fetch-global-blacklist/${id}`, {
+        const response = await fetch(`${ENDPOINT}/fetch-global-blacklist/${id}`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`,
                 "X-Actor-ID": session.user.id

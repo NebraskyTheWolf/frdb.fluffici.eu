@@ -33,6 +33,8 @@ export const PERMISSIONS = {
     MANAGE_WEBHOOKS: 1 << 29
 };
 
+export const ENDPOINT = 'https://api.sentralyx.com'
+
 
 export const defaultSettings = (id: string): GuildSettings => {
     return {

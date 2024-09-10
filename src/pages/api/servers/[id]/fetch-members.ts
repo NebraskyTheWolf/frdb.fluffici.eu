@@ -3,6 +3,7 @@ import axios from "axios";
 import {getSession, useSession} from "next-auth/react";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
+import { ENDPOINT } from '@/lib/constants';
 
 type ErrorResponse = {
     error: string;
@@ -18,7 +19,7 @@ export default async function handler(
         return res.status(401).json({ error: 'Unauthorized' });
 
     try {
-        const response = await axios.post(`https://furraidapi.fluffici.eu/servers/${id}/fetch-members`, {
+        const response = await axios.post(`${ENDPOINT}/servers/${id}/fetch-members`, {
             actorId: session.user.id
         },{
             headers: {

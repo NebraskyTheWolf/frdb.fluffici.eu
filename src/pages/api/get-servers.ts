@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from "axios";
+import { ENDPOINT } from '@/lib/constants';
 
 type Data = {
     id: string;
@@ -17,7 +18,7 @@ export default async function handler(
     res: NextApiResponse<Data | ErrorResponse>
 ) {
     try {
-        const response = await axios.get('https://furraidapi.fluffici.eu/get-servers', {
+        const response = await axios.get(`${ENDPOINT}/get-servers`, {
             headers: {
                 "Authorization": `${process.env.API_TOKEN}`
             }

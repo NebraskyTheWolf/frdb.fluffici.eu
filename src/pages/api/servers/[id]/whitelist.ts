@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from "axios";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth].ts";
+import { ENDPOINT } from '@/lib/constants';
 
 type ErrorResponse = {
     error: string;
@@ -17,7 +18,7 @@ export default async function handler(
         return res.status(401).json({ error: 'Unauthorized' });
 
     try {
-        const response = await axios.post(`https://furraidapi.fluffici.eu/servers/${serverId}/whitelist`, {
+        const response = await axios.post(`${ENDPOINT}/servers/${serverId}/whitelist`, {
             actorId: session?.user.id
         },{
             headers: {
