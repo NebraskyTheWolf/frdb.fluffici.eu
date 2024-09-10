@@ -113,8 +113,8 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
                         {verification.status.toLowerCase() === 'accepted' || verification.status.toLowerCase() === 'verified' || verification.status.toLowerCase() === 'denied' ? (
                             <div className="flex items-center space-x-2">
                                 <img src={getServerIconUrlValid(verification.verifiedBy.avatarUrl)}
-                                     alt={`${verification.verifiedBy.username}'s avatar`}
-                                     className="w-8 h-8 md:w-10 md:h-10 rounded-full"/>
+                                    alt={`${verification.verifiedBy.username}'s avatar`}
+                                    className="w-8 h-8 md:w-10 md:h-10 rounded-full"/>
                                 <span className="text-sm text-gray-300">Verified By: {verification.verifiedBy.username}</span>
                             </div>
                         ) : isBlacklisted ? (

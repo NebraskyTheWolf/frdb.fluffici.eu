@@ -64,7 +64,7 @@ const DashboardPage: React.FC = () => {
     const [selectedServer, setSelectedServer] = useState<Server | null>(null);
     const [isPremium, setIsPremium] = useState(false);
     const [isBlacklisted, setIsBlacklisted] = useState(false);
-    const [planName, setPlanName] = useState("FurRaid Advanced+");
+    const [planName, setPlanName] = useState("free");
     const [planExpiration, setPlanExpiration] = useState(0);
     const [activeSection, setActiveSection] = useState<string>("");
     const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
@@ -124,13 +124,11 @@ const DashboardPage: React.FC = () => {
                 setSelectedServer(server);
                 setActiveSection(""); // Reset active section when selecting a new server
 
-                //const premiumResponse = await axios.get(`/api/is-premium/${server.id}`);
-                //setIsPremium(premiumResponse.data.isPremium);
-                //setPlanName(premiumResponse.data.planName || "FurRaid Classic");
-                //setPlanExpiration(premiumResponse.data.expiration)
+                const premiumResponse = await axios.get(`/api/is-premium/${server.id}`);
+                setIsPremium(premiumResponse.data.isPremium);
+                setPlanName(premiumResponse.data.planName || "free");
+                setPlanExpiration(premiumResponse.data.expiration)
 
-                setIsPremium(true);
-                setPlanName("FurRaid Advanced+");
                 setIsBlacklisted(response.data.isBlacklisted)
                 fetchQuota()
             }
@@ -232,7 +230,7 @@ const DashboardPage: React.FC = () => {
                                             <li>All commands on the server</li>
                                             <li>Inviting the bot on your server</li>
                                         </ul>
-                                        <Link href="https://discord.gg/RxvDMKQgtk">
+                                        <Link href="mailto:support@sentralyx.com">
                                             <Button variant="outline">
                                                 Contact Support
                                             </Button>
@@ -253,17 +251,17 @@ const DashboardPage: React.FC = () => {
                             }}
                         >
                             <DialogHeader className="text-white">
-                                <DialogTitle>{selectedServer?.name} Does Not Have FurRaidDB</DialogTitle>
+                                <DialogTitle>{selectedServer?.name} Does Not Have Sentralyx</DialogTitle>
                                 <DialogDescription className="text-base md:text-lg text-gray-300 py-4">
-                                    This server does not have FurRaidDB. By inviting FurRaidDB, you agree to our Terms of Service and Privacy Policy.
+                                    This server does not have Sentralyx. By inviting Sentralyx, you agree to our Terms of Service and Privacy Policy.
                                 </DialogDescription>
                             </DialogHeader>
                             <DialogFooter className="sm:justify-start">
                                 <Link
-                                    href="https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot"
+                                    href={`https://discord.com/oauth2/authorize?client_id=1281924846690762794&permissions=1101659220054&response_type=code&redirect_uri=https%3A%2F%2Fsentralyx.com&integration_type=0&scope=bot&guild_id=${selectedServer?.id}`} 
                                 >
                                     <Button type="button" variant="outline">
-                                        Invite FurRaidDB
+                                        Invite Sentralyx
                                     </Button>
                                 </Link>
                             </DialogFooter>

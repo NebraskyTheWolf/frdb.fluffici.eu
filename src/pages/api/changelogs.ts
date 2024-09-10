@@ -30,15 +30,20 @@ export default async function handler(
             }
         });
         const data = await response.json();
-        if (await redis.exists('changelogs')) {
-            var cachedData: any = await redis.get('changelogs');
-            
-            res.status(200).json(JSON.parse(cachedData));
-        } else {
-            await redis.set('changelogs', JSON.stringify(data))
-            await redis.expire('changelogs', 3600)
 
-            res.status(200).json(data);
+        if (data.status) {
+            if (await redis.exists('changelogs')) {
+                var cachedData: any = await redis.get('changelogs');
+                
+                res.status(200).json(JSON.parse(cachedData));
+            } else {
+                await redis.set('changelogs', JSON.stringify(data))
+                await redis.expire('changelogs', 3600)
+    
+                res.status(200).json(data);
+            }
+        } else {
+            res.status(404).end()
         }
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch data' });

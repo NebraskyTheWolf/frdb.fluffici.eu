@@ -7,8 +7,8 @@ import Hero from "@/components/cards/hero";
 import Metrics from "@/components/cards/metrics.tsx";
 
 export const metadata: Metadata = {
-  title: "FurRaidDB",
-  description: "The official website of FurRaidDB",
+  title: "Sentralyx",
+  description: "The official website of Sentralyx",
 };
 
 export default function Home() {

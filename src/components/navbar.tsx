@@ -27,7 +27,7 @@ import { useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
     { href: "/", icon: FaHome, label: "Home" },
-    { href: "https://frdbdocs.fluffici.eu/", icon: FaClipboardList, label: "Documentation" },
+    { href: "https://docs.sentralyx.com", icon: FaClipboardList, label: "Documentation" },
     {
         icon: FaPlusSquare,
         label: "Invite",
@@ -35,8 +35,8 @@ const NAV_ITEMS = [
         dialogContent: {
             title: "Invitation",
             description:
-                "By inviting FurRaidDB, you agree to our Terms of Service and Privacy Policy.",
-            link: "https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot",
+                "By inviting Sentralyx, you agree to our Terms of Service and Privacy Policy.",
+            link: "https://discord.com/oauth2/authorize?client_id=1281924846690762794&permissions=1101659220054&response_type=code&redirect_uri=https%3A%2F%2Fsentralyx.com&integration_type=0&scope=bot",
         },
     }
 ];
@@ -95,7 +95,7 @@ const Navbar = () => {
         <nav className="bg-gray-900 text-white py-4 relative z-10 shadow-md">
             <div className="container mx-auto flex justify-between items-center px-4 md:px-0">
                 <h1 className="text-2xl font-bold">
-                    <Link href="/">FurRaidDB</Link>
+                    <Link href="/">Sentralyx</Link>
                 </h1>
                 <ul className="hidden md:flex space-x-4 items-center">
                     {NAV_ITEMS.map((item, index) =>

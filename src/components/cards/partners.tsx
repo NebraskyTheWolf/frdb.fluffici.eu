@@ -40,7 +40,7 @@ const Partners: React.FC = () => {
           <div className="flex flex-col items-center">
             <h2 className="text-2xl font-bold mb-6">
               Many popular servers use{" "}
-              <span className="text-red-600">FurRaidDB</span>
+              <span className="text-red-600">Sentralyx</span>
             </h2>
             <div className="flex flex-wrap justify-center gap-4">
               {loading

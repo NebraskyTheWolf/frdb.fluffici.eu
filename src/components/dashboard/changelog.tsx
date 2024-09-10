@@ -26,10 +26,17 @@ const Changelog: React.FC = () => {
         const fetchChangelogs = async () => {
             try {
                 const response = await axios.get('/api/changelogs');
-                setChangelog(response.data);
-                setLoading(false);
+
+                if (response.status === 404) {
+                    showToast("No change logs available.", "error")
+                    setLoading(true);
+                } else {
+                    setChangelog(response.data);
+                    setLoading(false);
+                }
             } catch (error) {
-                showToast("Unable to load the changelogs", "error")
+                showToast("No change logs available.", "error")
+                setLoading(true);
             }
         }
 

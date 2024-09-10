@@ -39,7 +39,7 @@ const InviteBot: React.FC = () => {
                 <div className="grid grid-cols-4 items-center gap-4"></div>
               </div>
               <DialogFooter className="sm:justify-start">
-                <Link href="https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot">
+                <Link href="https://discord.com/oauth2/authorize?client_id=1281924846690762794&permissions=1101659220054&response_type=code&redirect_uri=https%3A%2F%2Fsentralyx.com&integration_type=0&scope=bot">
                   <Button variant="ghost">Rozumím.</Button>
                 </Link>
               </DialogFooter>

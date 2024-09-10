@@ -6,5 +6,5 @@ export GIT_SHA=$(GIT_SHA_FETCH)
 all: build_docker
 
 build_docker:
-	docker build --build-arg GIT_SHA=$(GIT_SHA_FETCH) . -t ghcr.io/fluffici/frdb-web-beta:latest
-	docker push ghcr.io/fluffici/frdb-web-beta:latest
+	docker build --build-arg GIT_SHA=$(GIT_SHA_FETCH) . -t ghcr.io/nebraskythewolf/frdb-web-beta:latest
+	docker push ghcr.io/nebraskythewolf/frdb-web-beta:latest

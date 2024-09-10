@@ -2,7 +2,6 @@ import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import {PERMISSIONS} from "@/lib/constants.ts";
 import {StylesConfig} from "react-select";
-import {randomUUID} from "node:crypto";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

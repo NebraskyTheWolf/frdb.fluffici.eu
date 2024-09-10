@@ -25,6 +25,7 @@ import { getServerIconUrl } from "@/lib/utils.ts";
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { PERMISSIONS } from "@/lib/constants.ts";
 import {FaFileCirclePlus} from "react-icons/fa6";
+import Link from 'next/link';
 
 interface SidebarProps {
     server: Guild;
@@ -49,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
     };
 
     const restrictByPlan = (plan: string, requiredPlan: string) => {
-        const plans = ['FurRaid Classic', 'FurRaid Lite+', 'FurRaid Advanced+'];
+        const plans = ['free', 'lite', 'premium'];
         return plans.indexOf(plan) >= plans.indexOf(requiredPlan);
     };
 
@@ -70,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                 </Tooltip.Trigger>
                 {!restrictByPlan(planName, requiredPlan) && (
                     <Tooltip.Content side="right" align="center"
-                                     className="bg-gray-700 text-white p-2 rounded shadow-lg">
+                                    className="bg-gray-700 text-white p-2 rounded shadow-lg">
                         <Tooltip.Arrow className="fill-gray-700"/>
                         This feature requires {requiredPlan}
                     </Tooltip.Content>
@@ -82,13 +83,26 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
     return (
         <div className="w-full lg:w-64 text-white p-4">
             <div className="flex flex-col items-center mb-6">
-                <div className={`w-16 h-16 rounded-full `}>
-                    <img src={getServerIconUrl(server.id, server.icon)} alt={server.name}
-                         className="w-full h-full rounded-full"/>
+                <div
+                    className={`w-16 h-16 rounded-full ${ isPremium ? 'border-4 border-yellow-500' : ''}`}
+                >
+                    <img
+                    src={getServerIconUrl(server.id, server.icon)}
+                    alt={server.name}
+                    className="w-full h-full rounded-full"
+                    />
                 </div>
                 <h2 className="mt-2 text-xl font-bold text-center">{server.name}</h2>
                 {isBlacklisted && <span className="text-sm text-red-500">Restricted</span>}
+                {isPremium && (
+                    <div className="mt-2">
+                    <span className="text-sm font-semibold text-yellow-500">
+                        {planName}
+                    </span>
+                    </div>
+                )}
             </div>
+
             <div className="mb-4">
                 <Button
                     variant={activeSection === 'Statistics' ? 'primary' : 'outline'}
@@ -135,9 +149,9 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                 </Button>
                 {openSection === 'MemberManagement' && (
                     <div className="mt-5">
-                        {renderButton('View Members', <FaUser className="mr-2" />, 'MemberManagement-ViewMembers', 'FurRaid Classic')}
-                        {renderButton('Local Blacklist', <FaBan className="mr-2" />, 'MemberManagement-LocalBlacklist', 'FurRaid Classic')}
-                        {renderButton('Whitelist', <FaCheck className="mr-2" />, 'MemberManagement-Whitelist', 'FurRaid Classic')}
+                        {renderButton('View Members', <FaUser className="mr-2" />, 'MemberManagement-ViewMembers', 'free')}
+                        {renderButton('Local Blacklist', <FaBan className="mr-2" />, 'MemberManagement-LocalBlacklist', 'free')}
+                        {renderButton('Whitelist', <FaCheck className="mr-2" />, 'MemberManagement-Whitelist', 'free')}
                     </div>
                 )}
             </div>
@@ -160,7 +174,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                         </Tooltip.Trigger>
                         {!isPremium && (
                             <Tooltip.Content side="right" align="center"
-                                             className="bg-gray-700 text-white p-2 rounded shadow-lg">
+                                            className="bg-gray-700 text-white p-2 rounded shadow-lg">
                                 <Tooltip.Arrow className="fill-gray-700"/>
                                 This feature requires Premium
                             </Tooltip.Content>
@@ -169,10 +183,10 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                 </Tooltip.Provider>
                 {openSection === 'Protection' && (
                     <div className="mt-5">
-                        {renderButton('Anti Scam', <FaLock className="mr-2" />, 'Protection-AntiScam', 'FurRaid Advanced+')}
-                        {renderButton('Auto Moderation', <FaUserShield className="mr-2" />, 'Protection-AutoModeration', 'FurRaid Advanced+')}
-                        {renderButton('Invite Tracker', <FaFileCirclePlus className="mr-2" />, 'Protection-InviteTracker', 'FurRaid Advanced+')}
-                        {renderButton('Welcoming', <FaConciergeBell className="mr-2" />, 'Protection-Welcoming', 'FurRaid Advanced+')}
+                        {renderButton('Anti Scam', <FaLock className="mr-2" />, 'Protection-AntiScam', 'premium')}
+                        {renderButton('Auto Moderation', <FaUserShield className="mr-2" />, 'Protection-AutoModeration', 'premium')}
+                        {renderButton('Invite Tracker', <FaFileCirclePlus className="mr-2" />, 'Protection-InviteTracker', 'premium')}
+                        {renderButton('Welcoming', <FaConciergeBell className="mr-2" />, 'Protection-Welcoming', 'premium')}
                     </div>
                 )}
             </div>
@@ -195,7 +209,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                         </Tooltip.Trigger>
                         {!isPremium && (
                             <Tooltip.Content side="right" align="center"
-                                             className="bg-gray-700 text-white p-2 rounded shadow-lg">
+                                            className="bg-gray-700 text-white p-2 rounded shadow-lg">
                                 <Tooltip.Arrow className="fill-gray-700"/>
                                 This feature requires Premium
                             </Tooltip.Content>
@@ -204,8 +218,8 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                 </Tooltip.Provider>
                 {openSection === 'Verification' && (
                     <div className="mt-5">
-                        {renderButton('Verifications', <FaClipboardList className="mr-2" />, 'Verification-Verifications', 'FurRaid Advanced+')}
-                        {renderButton('Configuration', <FaCog className="mr-2" />, 'Verification-Configuration', 'FurRaid Advanced+', (server.permissions & PERMISSIONS.MANAGE_GUILD) !== PERMISSIONS.MANAGE_GUILD)}
+                        {renderButton('Verifications', <FaClipboardList className="mr-2" />, 'Verification-Verifications', 'premium')}
+                        {renderButton('Configuration', <FaCog className="mr-2" />, 'Verification-Configuration', 'premium', (server.permissions & PERMISSIONS.MANAGE_GUILD) !== PERMISSIONS.MANAGE_GUILD)}
                     </div>
                 )}
             </div>
@@ -228,7 +242,7 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                         </Tooltip.Trigger>
                         {!isPremium && (
                             <Tooltip.Content side="right" align="center"
-                                             className="bg-gray-700 text-white p-2 rounded shadow-lg">
+                                            className="bg-gray-700 text-white p-2 rounded shadow-lg">
                                 <Tooltip.Arrow className="fill-gray-700"/>
                                 This feature requires Premium
                             </Tooltip.Content>
@@ -237,8 +251,8 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                 </Tooltip.Provider>
                 {openSection === 'Ticket' && (
                     <div className="mt-5">
-                        {renderButton('Support Ticket', <FaLifeRing className="mr-2" />, 'Ticket-SupportTicket', 'FurRaid Lite+')}
-                        {renderButton('Settings', <FaCog className="mr-2" />, 'Ticket-Settings', 'FurRaid Lite+')}
+                        {renderButton('Support Ticket', <FaLifeRing className="mr-2" />, 'Ticket-SupportTicket', 'lite')}
+                        {renderButton('Settings', <FaCog className="mr-2" />, 'Ticket-Settings', 'lite')}
                     </div>
                 )}
             </div>
@@ -263,6 +277,55 @@ const Sidebar: React.FC<SidebarProps> = ({ server, isBlacklisted, isPremium, pla
                     <FaClipboardList className="mr-2" /> Audit Logs
                 </Button>
             </div>
+
+            <div className={`mt-6 p-4 rounded-lg ${isPremium ? 'bg-gray-800' : 'bg-gray-900'} text-white`}>
+                <h3 className="text-lg font-bold mb-2">Subscription Information</h3>
+                {isPremium ? (
+                    <div>
+                        <p className="text-sm mb-2">Your current plan: {planName}</p>
+                        <p className="text-sm mb-2">Premium expires on: {new Date(premiumExpirationDate).toLocaleDateString()}</p>
+                        {isQuotaReached && (
+                            <div>
+                                {planName === "lite" ? (
+                                    <div>
+                                        <Link href="/premium" passHref>
+                                            <Button
+                                                variant="premium"
+                                                className="w-full mt-4"
+                                            >
+                                                Upgrade to Premium
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                ) : planName === "premium" && (
+                                    <div>
+                                        <p className="text-sm text-red-400">Quota has been reached. Please contact support for custom limits.</p>
+                                        <Link href="/support" passHref>
+                                            <Button
+                                                variant="invite"
+                                                className="w-full mt-4"
+                                            >
+                                                Contact Support
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div>
+                        <Button
+                            variant="premium"
+                            className="w-full mt-4"
+                            onClick={() => alert('Upgrade to Premium')}
+                        >
+                            Upgrade to Premium
+                        </Button>
+                    </div>
+                )}
+            </div>
+
         </div>
     );
 };

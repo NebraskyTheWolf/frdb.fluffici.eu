@@ -41,7 +41,7 @@ const Hero: React.FC = () => {
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between">
           <div className="max-w-md mx-auto md:mx-0 md:mr-8 text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              FurRaidDB
+              Sentralyx
             </h1>
             <p className="text-base md:text-lg leading-relaxed mb-8">
               The best way to{" "}
@@ -57,11 +57,11 @@ const Hero: React.FC = () => {
                   <DialogHeader className="text-white">
                     <DialogTitle>Invitation</DialogTitle>
                     <DialogDescription className="text-base md:text-lg text-gray-300 py-4">
-                      By inviting FurRaidDB, you agree to our Terms of Service and Privacy Policy.
+                      By inviting Sentralyx, you agree to our Terms of Service and Privacy Policy.
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter className="sm:justify-start">
-                    <Link href="https://discord.com/oauth2/authorize?client_id=803015962223837184&permissions=1101659163654&integration_type=0&scope=bot">
+                    <Link href="https://discord.com/oauth2/authorize?client_id=1281924846690762794&permissions=1101659220054&response_type=code&redirect_uri=https%3A%2F%2Fsentralyx.com&integration_type=0&scope=bot">
                       <Button type="button" variant="outline">
                         Understand
                       </Button>
@@ -73,8 +73,8 @@ const Hero: React.FC = () => {
           </div>
           <div className="hidden md:block w-64">
             <img
-                src="https://cdn.discordapp.com/app-icons/803015962223837184/650c1b689a2433b5f6ea61fffeae339e.png"
-                alt="FurRaidDB Logo"
+                src="https://cdn.discordapp.com/app-icons/1281924846690762794/82b7e213b3b17d15b38f8f727aa462ff.png"
+                alt="Sentralyx Logo"
                 className="h-64 w-64 rounded-lg"
             />
           </div>

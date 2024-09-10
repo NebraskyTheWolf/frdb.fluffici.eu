@@ -20,7 +20,7 @@ const PremiumPlans: React.FC = () => {
                 const response = await fetch('/api/get-all-offers');
                 const data = await response.json();
                 setPlans(data);
-               setIsLoading(false);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching offers:', error);
                 setIsLoading(false);
@@ -31,7 +31,7 @@ const PremiumPlans: React.FC = () => {
     }, []);
 
     const handleCardClick = (plan: Plan) => {
-        if (plan.offerName !== 'FurRaid Classic') {
+        if (plan.offerSlug !== 'free') {
             setSelectedPlan(plan);
         }
     };

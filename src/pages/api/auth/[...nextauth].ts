@@ -1,6 +1,5 @@
 import NextAuth, {NextAuthOptions} from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
-import axios from "axios";
 
 export const authOptions: NextAuthOptions = {
     providers: [
