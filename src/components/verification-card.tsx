@@ -41,7 +41,7 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
 
     useEffect(() => {
         const fetchIsBlacklisted = async () => {
-            const response = await axios.post(`/api/servers/${serverId}/is-blacklisted?actorId=${actorId}`, {
+            const response = await axios.post(`/api/servers/${serverId}/is-blacklisted`, {
                 user: verification.userId
             });
 
@@ -65,7 +65,7 @@ const VerificationCard: React.FC<VerificationProps> = ({ verification, isExpande
             case 'accepted':
                 return 'bg-green-500 text-white';
             case 'denied':
-                return 'bg-red-500 text-white';
+            case 'ineligible':
             case 'expired':
                 return 'bg-red-500 text-white';
             default:

@@ -1,10 +1,10 @@
-![Fluffici](https://avatars.githubusercontent.com/u/82099791?s=200&v=4 "Fluffici logo")
+![Sentralyx](https://avatars.githubusercontent.com/u/82099791?s=200&v=4 "Sentralyx logo")
 
-## Fluffici - FurRaidDB - Web
+## Sentralyx - Web
 
 ------------------------------------
 
-- Name : FurRaidDB - Web
+- Name : Sentralyx - Web
 - Type : Web Application
 - State : W.I.P
 - Developer(s) : Vakea
@@ -16,4 +16,4 @@ Please read the [Code of Conduct](https://github.com/NebraskyTheWolf/www.fluffic
 and the [Contribution](https://github.com/NebraskyTheWolf/www.fluffici.eu/blob/master/docs/CONTRIBUTING.md) rules.
 
 ## Description
-This project is made for Fluffici, this repository contains the code of the FurRaidDB Website
+This project is made for Sentralyx

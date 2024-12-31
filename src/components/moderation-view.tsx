@@ -39,7 +39,7 @@ const ModerationDialog: React.FC<ModerationDialogProps> = ({ actorId, serverId, 
         setIsLoading(true);
         setError(null);
         try {
-            const response = await axios.post(`/api/servers/${serverId}/moderation?actorId=${actorId}`, {
+            const response = await axios.post(`/api/servers/${serverId}/moderation`, {
                 user: memberId
             });
             if (!response.data) {

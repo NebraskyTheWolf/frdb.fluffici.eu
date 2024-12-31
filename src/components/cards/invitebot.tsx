@@ -15,10 +15,9 @@ const InviteBot: React.FC = () => {
   return (
       <section className="py-12 bg-gray-900 text-white">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Připraven(a) pozvat?</h2>
+          <h2 className="text-4xl font-bold mb-6">Ready to invite?</h2>
           <p className="text-lg text-gray-300 mb-8">
-            Vylepšete svůj zážitek na Discordu s naším botem. Zlepšete moderování,
-            zabezpečení a mnoho dalšího.
+            Enhance your Discord experience with our bot. Improve moderation, security, and more.
           </p>
           <Dialog>
             <DialogTrigger asChild>
@@ -30,9 +29,9 @@ const InviteBot: React.FC = () => {
                 }}
             >
               <DialogHeader className="text-white">
-                <DialogTitle>Pozvat FurRaidDB</DialogTitle>
+                <DialogTitle>Pozvat Sentralyx</DialogTitle>
                 <DialogDescription className="text-base md:text-lg text-gray-300 py-4">
-                  Pozváním FurRaidDB souhlasíte s našimi Podmínkami služby a Zásadami ochrany osobních údajů.
+                  By inviting Sentralyx, you agree to our Terms of Service and Privacy Policy.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -40,7 +39,7 @@ const InviteBot: React.FC = () => {
               </div>
               <DialogFooter className="sm:justify-start">
                 <Link href="https://discord.com/oauth2/authorize?client_id=1281924846690762794&permissions=1101659220054&response_type=code&redirect_uri=https%3A%2F%2Fsentralyx.com&integration_type=0&scope=bot">
-                  <Button variant="ghost">Rozumím.</Button>
+                  <Button variant="ghost">Invite</Button>
                 </Link>
               </DialogFooter>
             </DialogContent>

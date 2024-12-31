@@ -9,11 +9,11 @@ const Footer: React.FC = () => {
             <div className="mb-6 md:mb-0">
               <div className="flex flex-col">
               <span className="text-2xl font-semibold text-gray-900 dark:text-white">
-                FurRaidDB
+                Sentralyx
               </span>
                 <div className="max-w-xs">
                   <p className="text-sm text-gray-600 dark:text-gray-400 text-wrap md:text-balance break-all">
-                   #1 československý Anti-Raid bot se zaměřením na furries!
+                    #1 Czechoslovak Anti-Raid bot with a focus on furries!
                   </p>
                 </div>
               </div>
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
             <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
               <div>
                 <h2 className="mb-6 text-sm font-semibold text-gray-900 dark:text-white">
-                  FurRaidDB
+                  Sentralyx
                 </h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4" hidden={true}>
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
                     </a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://discord.gg/gAy6AQB8HK" className="hover:underline">
+                    <a href="https://discord.gg/CENQJvT8A4" className="hover:underline">
                       Support Server
                     </a>
                   </li>
@@ -39,16 +39,16 @@ const Footer: React.FC = () => {
               </div>
               <div>
                 <h2 className="mb-6 text-sm font-semibold text-gray-900 dark:text-white">
-                  Fluffici, z.s.
+                  FurryPlayPlace
                 </h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a href="https://fluffici.eu/tos" className="hover:underline">
+                    <a href="https://www.furryplayplace.net/tos" className="hover:underline">
                       Terms of Service
                     </a>
                   </li>
                   <li className="mb-4">
-                    <a href="https://fluffici.eu/privacy-policy" className="hover:underline">
+                    <a href="https://www.furryplayplace.net/privacy-policy" className="hover:underline">
                       Privacy & Policy
                     </a>
                   </li>
@@ -60,13 +60,13 @@ const Footer: React.FC = () => {
           <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2024{" "}
-            <a href="https://fluffici.eu" className="hover:underline">
-              Fluffici, z.s.
+            <a href="https://www.furryplayplace.net" className="hover:underline">
+              FurryPlayPlace
             </a>
             {" "} All right Reserved {"  "} Made by <a href="https://nebraskythewolf.work/en" className="hover:underline">Vakea</a> with 🦊❤️
           </span>
             <div className="flex mt-4 sm:justify-center sm:mt-0">
-              <a href="https://discord.gg/fluffici">
+              <a href="https://discord.gg/CENQJvT8A4">
                 <FaDiscord
                     className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
                 />

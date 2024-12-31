@@ -50,7 +50,7 @@ const PremiumPlans: React.FC = () => {
     return (
         <section className="py-12 text-white">
             <div className="container mx-auto text-center">
-                <h2 className="text-4xl font-bold mb-6">Prémiový plán</h2>
+                <h2 className="text-4xl font-bold mb-6">Premium plán</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {plans && plans.map((plan) => (
                         <div
@@ -63,14 +63,14 @@ const PremiumPlans: React.FC = () => {
                             <div>
                                 <h3 className="text-2xl font-bold mb-4">{plan.offerName}</h3>
                                 <p className="text-xl mb-4">
-                                    {plan.offerPrice !== 0 ? `${plan.offerPrice} Kč/měsíc nebo ${plan.offerPrice * 12} Kč/rok` : 'Zdarma'}
+                                    {plan.offerPrice !== 0 ? `${plan.offerPrice} Kč/monthly or ${plan.offerPrice * 12} Kč/yearly` : 'Free'}
                                 </p>
                                 {plan.offerDescription && (
                                     <p className="text-gray-400 mb-4">{plan.offerDescription}</p>
                                 )}
                             </div>
                             <div>
-                                <h4 className="text-xl font-bold text-white mb-2">Zahrnuto:</h4>
+                                <h4 className="text-xl font-bold text-white mb-2">Included:</h4>
                                 <ul className="text-left mb-4">
                                     {plan.offerFeatures.map((feature, index) => (
                                         <li key={index} className="mb-2 flex items-center">
@@ -88,7 +88,7 @@ const PremiumPlans: React.FC = () => {
                     ))}
                 </div>
                 <Button variant="premium" className="mt-8" onClick={handleSelectPlan}>
-                    Vybrat {selectedPlan ? selectedPlan.offerName : 'plán'}
+                    Choose {selectedPlan ? selectedPlan.offerName : 'plan'}
                 </Button>
             </div>
         </section>

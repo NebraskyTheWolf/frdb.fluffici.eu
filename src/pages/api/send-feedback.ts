@@ -18,7 +18,7 @@ export default async function handler(
         return res.status(401).json({ status: false, error: 'Unauthorized' });
 
     try {
-        const response = await axios.post(`https://discord.com/api/webhooks/1283089168695820288/${process.env.FEEDBACK_TOKEN}`, {
+        const response = await axios.post(`https://discord.com/api/webhooks/1291920888488263773/${process.env.FEEDBACK_TOKEN}`, {
             username: session.user.name,
             avatar_url: session.user.image,
             content: req.body.message
