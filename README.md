@@ -1,12 +1,12 @@
-![Sentralyx](https://avatars.githubusercontent.com/u/82099791?s=200&v=4 "Sentralyx logo")
+![FurRaidDB](https://avatars.githubusercontent.com/u/82099791?s=200&v=4 "FurRaidDB logo")
 
-## Sentralyx - Web
+## FurRaidDB - Web
 
 ------------------------------------
 
-- Name : Sentralyx - Web
+- Name : FurRaidDB - Web
 - Type : Web Application
-- State : W.I.P
+- Status : Cancelled (Public Archive)
 - Developer(s) : Vakea
 - COC : [Code of Conduct](https://github.com/NebraskyTheWolf/www.fluffici.eu/blob/master/docs/CODE_OF_CONDUCT.md)
 
@@ -16,4 +16,4 @@ Please read the [Code of Conduct](https://github.com/NebraskyTheWolf/www.fluffic
 and the [Contribution](https://github.com/NebraskyTheWolf/www.fluffici.eu/blob/master/docs/CONTRIBUTING.md) rules.
 
 ## Description
-This project is made for Sentralyx
+This project is made for FurRaidDB
